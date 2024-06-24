@@ -18,3 +18,6 @@ npx sequelize-cli model:generate --name <Name model> --attributes <Field of Mode
 
 run migrate
 npx sequelize-cli db:migrate
+
+run seeder
+npx sequelize-cli db:seed:all

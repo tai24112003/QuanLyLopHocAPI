@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const Subject = require('../models/subject');
 const { where } = require('sequelize');
+const CommonContent = require('../models/common_content');
 
 let register = async (req, res, next) => {
     let email = req.body.email;
@@ -47,7 +48,16 @@ let login = async (req, res, next) => {
 }
 
 let test = async (req, res, next) => {
-    
+    let data =await CommonContent.findAll();
+    return res.send({data})
+}
+let getListTeacher = async (req, res, next) => {
+    let Teachers = await User.findAll({
+        where:{
+            role: 'GV'
+        }
+    });
+    return res.send({data:Teachers});
 }
 
 module.exports = {
