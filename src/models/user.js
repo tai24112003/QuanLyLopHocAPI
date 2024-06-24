@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 
 const { sequelize } = require("../configs/database");
-const Role = require("./role");
 
 const User = sequelize.define(
   "User",
@@ -13,18 +12,14 @@ const User = sequelize.define(
       primaryKey: true,
     },
     email: { type: DataTypes.STRING, allowNull: false },
+    name: { type: DataTypes.STRING, allowNull: false },
+    phone: { type: DataTypes.STRING, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false },
+    role: { type: DataTypes.STRING, allowNull: false },
   },
   {
     timestamps: false,
   }
 );
-
-Role.hasMany(User, {
-  foreignKey: { name: "role_id", type: DataTypes.INTEGER, allowNull: false },
-});
-User.belongsTo(Role, {
-  foreignKey: { name: "role_id", type: DataTypes.INTEGER, allowNull: false },
-});
 
 module.exports = User;

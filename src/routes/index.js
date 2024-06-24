@@ -10,10 +10,14 @@ const product_variantRouter = require('./product_variant');
 const order = require('./order');
 const feedback = require('./feedback');
 const subject = require('./subject');
+const chapter = require('./chapter');
+const user = require('./user');
 
 function setRoute(server) {
 
     server.use('/api/admin', adminRouter);
+
+    server.use('/api/user', user);
 
     server.use('/api/customer', customerRouter);
 
@@ -32,6 +36,8 @@ function setRoute(server) {
     server.use('/api/feedback', feedback);
     
     server.use('/api/subject', subject);
+
+    server.use('/api/chapter', chapter);
 
 
 

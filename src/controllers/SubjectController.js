@@ -23,7 +23,17 @@ let get = async (req, res, next) => {
       });
     return res.send({data:Subjects});
 }
+let getChapters = async (req, res, next) => {
+    let subjectId = req.params.subject_id;
+    let Chapters = await Chapter.findAll({
+        where: {
+            subject_id: subjectId
+        }
+    });
+    return res.send({data:Chapters});
+}
 module.exports = {
     getList,
-    get
+    get,
+    getChapters
 };
