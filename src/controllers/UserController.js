@@ -5,9 +5,13 @@ let getUsersByRole = async (req, res, next) => {
     let Teachers = await User.findAll({
         where:{
             role: role
-        }
+        },
+        attributes:['user_id','email','name','phone','role']
     });
-    return res.send({data:Teachers});
+    return res.send({
+        status: 'success',
+        data:Teachers
+    });
 }
 
 module.exports = {
