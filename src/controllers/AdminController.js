@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
+const Subject = require('../models/subject');
+const { where } = require('sequelize');
 
 let register = async (req, res, next) => {
     let email = req.body.email;
@@ -45,7 +47,8 @@ let login = async (req, res, next) => {
 }
 
 let test = async (req, res, next) => {
-    return res.send({ status: 'Thành công' });
+    let a = await Subject.findAll();
+    return res.send({data:a});
 }
 
 module.exports = {
