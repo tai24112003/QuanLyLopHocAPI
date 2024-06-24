@@ -47,8 +47,7 @@ let login = async (req, res, next) => {
 }
 
 let test = async (req, res, next) => {
-    let a = await Subject.findAll();
-    return res.send({data:a});
+    
 }
 
 module.exports = {

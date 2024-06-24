@@ -9,5 +9,4 @@ const Subject = sequelize.define(
   },
 );
 
-
 module.exports = Subject;
