@@ -36,6 +36,8 @@ const Question = sequelize.define(
   {
     tableName: 'Questions', 
     timestamps: true, 
+    paranoid: true, // Thêm paranoid để hỗ trợ xóa mềm
+    deletedAt: 'deletedAt',
   }
 );
 

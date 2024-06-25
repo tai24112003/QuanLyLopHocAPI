@@ -19,6 +19,8 @@ const CommonContent = sequelize.define(
   {
     tableName: 'common_contents', // Tên của bảng trong cơ sở dữ liệu là common_contents
     timestamps: true, // Sequelize tự động thêm các cột createdAt và updatedAt
+    paranoid: true, // Thêm paranoid để hỗ trợ xóa mềm
+    deletedAt: 'deletedAt',
   }
 );
 
