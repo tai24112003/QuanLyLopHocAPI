@@ -25,7 +25,9 @@ const Choice = sequelize.define(
   {
     tableName: 'Choices', 
     timestamps: true, // Nếu bạn muốn sử dụng các trường createdAt và updatedAt, nếu không muốn, bạn có thể đặt timestamps: false
-  }
+    paranoid: true, // Thêm paranoid để hỗ trợ xóa mềm
+    deletedAt: 'deletedAt',
+    }
 );
 
 module.exports = Choice;
