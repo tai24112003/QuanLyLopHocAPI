@@ -1,4 +1,4 @@
-ClassSession = require('../models/class_sessions')
+const ClassSession = require('../models/class_sessions');
 
 let insert = async (req, res) => {
     try {
@@ -16,14 +16,12 @@ let insert = async (req, res) => {
             RoomID
         });
 
-        // Optionally, you can include associated models like User and Room
-        // If you have included associations in your model definition,
-        // Sequelize will automatically handle foreign key associations
-
-        // Return success response
+        // Return success response with SessionID
         return res.status(201).json({
             status: 'success',
-            data: newClassSession
+            data: {
+                sessionID: newClassSession.SessionID,
+            }
         });
     } catch (error) {
         // Handle error
