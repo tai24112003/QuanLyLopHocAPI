@@ -1,18 +1,16 @@
 const express = require('express');
 
 const adminRouter = require('./admin');
-const customerRouter = require('./customer');
-const colourRouter = require('./colour');
-const sizeRouter = require('./size');
-const categoryRouter = require('./category');
-const productRouter = require('./product');
-const product_variantRouter = require('./product_variant');
-const order = require('./order');
-const feedback = require('./feedback');
 const subject = require('./subject');
 const chapter = require('./chapter');
 const user = require('./user');
 const question = require('./question');
+const setting = require('./setting')
+const computer = require('./computer')
+const class_sessions = require('./class_session')
+const session_computer = require('./session_computer')
+const room = require('./room')
+
 
 function setRoute(server) {
 
@@ -20,27 +18,20 @@ function setRoute(server) {
 
     server.use('/api/user', user);
 
-    server.use('/api/customer', customerRouter);
-
-    server.use('/api/colour', colourRouter);
-
-    server.use('/api/size', sizeRouter);
-
-    server.use('/api/category', categoryRouter);
-
-    server.use('/api/product', productRouter);
-
-    server.use('/api/product-variant', product_variantRouter);
-
-    server.use('/api/order', order);
-
-    server.use('/api/feedback', feedback);
-    
     server.use('/api/subject', subject);
 
     server.use('/api/chapter', chapter);
 
     server.use('/api/question', question);
+    server.use('/api/setting', setting);
+
+    server.use('/api/computer', computer);
+
+    server.use('/api/class_session', class_sessions);
+
+    server.use('/api/session_computer', session_computer);
+
+    server.use('/api/room', room);
 
 
 

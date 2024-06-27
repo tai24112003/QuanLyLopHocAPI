@@ -18,7 +18,7 @@ setRouter(server);
 
 (async () => {
   await db.connect();
-  await createRecordsDefault();
+  // await createRecordsDefault();
 })();
 
 server.listen(port, () => {

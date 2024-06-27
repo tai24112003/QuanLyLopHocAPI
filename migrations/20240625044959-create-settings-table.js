@@ -9,25 +9,16 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('common_contents', {
+    await queryInterface.createTable('Settings', {
       id: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         autoIncrement: true,
-      },
-      content: {
-        type: Sequelize.TEXT,
+        primaryKey: true,
         allowNull: false,
       },
-      createdAt: {
+      lastTimeUpdateUser: {
         type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      },
-      updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+        allowNull: true,
       },
     });
   },
@@ -39,6 +30,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('common_contents');
+    await queryInterface.dropTable('Settings');
   }
 };
