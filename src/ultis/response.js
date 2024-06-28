@@ -1,4 +1,4 @@
-const sendSuccessResponse = (res, data) => {
+  const sendSuccessResponse = (res, data) => {
     res.status(200).json({ success: true, data });
   };
   
@@ -9,10 +9,15 @@ const sendSuccessResponse = (res, data) => {
   const sendInternalErrorResponse = (res) => {
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   };
+
+  const sendUploadSuccess = (res, data) => {
+    res.status(200).json({ success: true, data, url: data.url });
+  };
   
   module.exports = {
     sendSuccessResponse,
     sendErrorResponse,
     sendInternalErrorResponse,
+    sendUploadSuccess
   };
   

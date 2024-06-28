@@ -10,7 +10,7 @@ const computer = require('./computer')
 const class_sessions = require('./class_session')
 const session_computer = require('./session_computer')
 const room = require('./room')
-
+const asset = require('./asset');
 
 function setRoute(server) {
 
@@ -33,7 +33,7 @@ function setRoute(server) {
 
     server.use('/api/room', room);
 
-
+    server.use('/api/upload', asset);
 
 }
 

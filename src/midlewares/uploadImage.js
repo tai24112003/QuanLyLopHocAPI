@@ -6,7 +6,6 @@ const storage = multer.diskStorage({
         cb(null, './src/public/images');
     },
     filename: function (req, file, cb) {
-        let { originalname } = file;
         let fileExtension
         if (file.mimetype == "image/png") {
             fileExtension = '.png'
@@ -29,6 +28,6 @@ const upload = multer({
     }
 });
 
-const uploadImage = upload.array('product_images', 6);
+const uploadImage = upload.single('upload');
 
 module.exports = uploadImage;

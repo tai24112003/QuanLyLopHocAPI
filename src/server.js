@@ -11,7 +11,7 @@ global.__basedir = __dirname;
 
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
-server.use(cors());
+server.use(cors()); 
 server.use("/static", express.static("./src/public"));
 
 setRouter(server);
