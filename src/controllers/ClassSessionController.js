@@ -4,9 +4,6 @@ let insert = async (req, res) => {
     try {
         const { ClassName, Session, StartTime, EndTime, user_id, RoomID } = req.body;
 
-        // Validate data (optional)
-
-        // Create new class session
         const newClassSession = await ClassSession.create({
             ClassName,
             Session,

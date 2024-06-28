@@ -8,7 +8,8 @@ const Room = sequelize.define('Room', {
     StandardRAM: { type: DataTypes.STRING },
     StandardHDD: { type: DataTypes.STRING },
     StandardCPU: { type: DataTypes.STRING },
-    Status: { type: DataTypes.STRING }
+    Status: { type: DataTypes.STRING },
+
 },
     {
         timestamps: false,

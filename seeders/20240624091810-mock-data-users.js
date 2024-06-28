@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add seed commands here.
      *
@@ -14,7 +14,7 @@ module.exports = {
     */
     await queryInterface.bulkInsert('Users', [
       {
-        user_id: Sequelize.literal('UUID()'), // Sử dụng UUID() để tạo UUID mới
+        user_id: 1, // Sử dụng UUID() để tạo UUID mới
         email: 'user1@example.com',
         name: 'User One',
         phone: '1234567890',
@@ -22,7 +22,7 @@ module.exports = {
         role: 'GV'
       },
       {
-        user_id: Sequelize.literal('UUID()'),
+        user_id: 2,
         email: 'user2@example.com',
         name: 'User Two',
         phone: '0987654321',
@@ -30,7 +30,7 @@ module.exports = {
         role: 'GV'
       },
       {
-        user_id: Sequelize.literal('UUID()'),
+        user_id: 3,
         email: 'user3@example.com',
         name: 'User Three',
         phone: '1122334455',
@@ -38,7 +38,7 @@ module.exports = {
         role: 'GV'
       },
       {
-        user_id: Sequelize.literal('UUID()'),
+        user_id: 4,
         email: 'user4@example.com',
         name: 'User Four',
         phone: '1122334457',
@@ -49,7 +49,7 @@ module.exports = {
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *

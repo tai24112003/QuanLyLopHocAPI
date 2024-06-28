@@ -4,6 +4,6 @@ const SettingController = require('../controllers/SettingController');
 
 let router = express.Router();
 
-router.get('/getLastTimeUpdateUser', SettingController.getAll);
+router.get('/getSetting', SettingController.getAll);
 
 module.exports = router;

@@ -1,10 +1,7 @@
 const Settings = require('../models/setting');
 
 let getAll = async (req, res, next) => {
-    let sizes = await Settings.findAll({
-        attributes: ['lastTimeUpdateUser'],
-        raw: true
-    });
+    let sizes = await Settings.findAll();
     return res.send({ data: sizes });
 }
 

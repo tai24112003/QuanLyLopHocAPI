@@ -12,6 +12,7 @@ const setting = sequelize.define(
             primaryKey: true,
         },
         lastTimeUpdateUser: { type: DataTypes.STRING, allowNull: false },
+        lastTimeUpdateSubject: { type: DataTypes.STRING, allowNull: false },
 
     },
     {
