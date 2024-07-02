@@ -4,6 +4,7 @@ const session_computer = require('../controllers/SessionComputerController');
 
 let router = express.Router();
 
-router.get('/getAll', session_computer.getAll);
+router.post('/insert', session_computer.insert);
+router.delete('/deleteBySessionID/:sessionID', session_computer.deleteByID);
 
 module.exports = router;

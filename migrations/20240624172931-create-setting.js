@@ -12,14 +12,7 @@ module.exports = {
       lastTimeUpdateUser: {
         type: Sequelize.DATE
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      lastTimeUpdateSubject: { type: Sequelize.STRING, allowNull: false },
     });
   },
   async down(queryInterface, Sequelize) {

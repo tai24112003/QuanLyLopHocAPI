@@ -21,10 +21,7 @@ const Session_Computer = sequelize.define('Session_Computer', {
     ComputerID: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-            model: 'Computers',
-            key: 'ComputerID',
-        },
+
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
     },
@@ -57,7 +54,7 @@ const Session_Computer = sequelize.define('Session_Computer', {
     },
 }, {
     tableName: 'Session_Computer',
-    timestamps: true,
+    timestamps: false,
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
 },

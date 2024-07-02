@@ -1,14 +1,22 @@
 const ClassSession = require('../models/class_sessions');
+const moment = require('moment-timezone');
 
 let insert = async (req, res) => {
     try {
         const { ClassName, Session, StartTime, EndTime, user_id, RoomID } = req.body;
 
+        // Chuyển đổi múi giờ của StartTime và EndTime sang múi giờ Việt Nam
+        const startTimeInVietnamTimeZone = moment.tz(StartTime, "UTC").tz("Asia/Ho_Chi_Minh").format();
+        const endTimeInVietnamTimeZone = moment.tz(EndTime, "UTC").tz("Asia/Ho_Chi_Minh").format();
+
+        console.log(startTimeInVietnamTimeZone);
+        console.log(endTimeInVietnamTimeZone);
+
         const newClassSession = await ClassSession.create({
             ClassName,
             Session,
-            StartTime,
-            EndTime,
+            StartTime: startTimeInVietnamTimeZone,
+            EndTime: endTimeInVietnamTimeZone,
             user_id,
             RoomID
         });
@@ -16,9 +24,9 @@ let insert = async (req, res) => {
         // Return success response with SessionID
         return res.status(201).json({
             status: 'success',
-            data: {
-                sessionID: newClassSession.SessionID,
-            }
+
+            SessionID: newClassSession.SessionID,
+
         });
     } catch (error) {
         // Handle error

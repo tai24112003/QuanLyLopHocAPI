@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../configs/database");
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../configs/database');
 
 const Choice = sequelize.define(
   "Choice",
@@ -23,11 +23,11 @@ const Choice = sequelize.define(
     },
   },
   {
-    tableName: 'Choices', 
+    tableName: 'Choices',
     timestamps: true, // Nếu bạn muốn sử dụng các trường createdAt và updatedAt, nếu không muốn, bạn có thể đặt timestamps: false
     paranoid: true, // Thêm paranoid để hỗ trợ xóa mềm
     deletedAt: 'deletedAt',
-    }
+  }
 );
 
 module.exports = Choice;
