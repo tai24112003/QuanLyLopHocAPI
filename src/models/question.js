@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../configs/database");
 const CommonContent = require('./common_content');
 const Choice = require("./choice");
+const Chapter = require("./chapter");
 
 
 const Question = sequelize.define(
@@ -46,5 +47,8 @@ CommonContent.hasMany(Question, { foreignKey: 'common_content_id', as: 'common_c
 
 Question.hasMany(Choice, { foreignKey: 'question_id', as: 'choices' });
 Choice.belongsTo(Question, { foreignKey: 'question_id', as: 'question' });
+
+Question.belongsTo(Chapter, { foreignKey: 'chapter_id' });
+Chapter.belongsTo(Question, { foreignKey: 'chapter_id' });
 
 module.exports = Question;
