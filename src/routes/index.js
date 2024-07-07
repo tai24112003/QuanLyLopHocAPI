@@ -11,6 +11,8 @@ const class_sessions = require('./class_session')
 const session_computer = require('./session_computer')
 const room = require('./room')
 const asset = require('./asset');
+const Choice = require('./choice');
+const commonContent = require('./common_content');
 
 function setRoute(server) {
 
@@ -23,6 +25,11 @@ function setRoute(server) {
     server.use('/api/chapter', chapter);
 
     server.use('/api/question', question);
+
+    server.use('/api/common-content', commonContent);
+
+    server.use('/api/choice', Choice);
+
     server.use('/api/setting', setting);
 
     server.use('/api/computer', computer);

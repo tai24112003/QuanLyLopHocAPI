@@ -8,6 +8,8 @@ router.get('/', QuestionController.getList)
 
 router.post('/', QuestionController.create)
 
+router.post('/create-or-update-many', QuestionController.createOrUpdateMany)
+
 router.put('/:id', QuestionController.update)
 
 router.delete('/:id', QuestionController.remove)

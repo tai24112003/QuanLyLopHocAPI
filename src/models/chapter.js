@@ -25,7 +25,7 @@ Subject.hasMany(Chapter, {
     foreignKey:'subject_id'
   });
 Chapter.belongsTo(Subject, { 
-    foreignKey:'id'
+    foreignKey:'subject_id'
   });
 
 module.exports = Chapter;
