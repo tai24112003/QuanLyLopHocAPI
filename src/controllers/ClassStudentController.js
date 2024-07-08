@@ -1,4 +1,4 @@
-const Student = require('../models/student'); // Import your SessionComputer model
+const ClassStudent = require('../models/class_student'); // Import your SessionComputer model
 
 
 // Endpoint to insert session computers
@@ -7,11 +7,10 @@ insert = async (req, res) => {
         const Students = req.body; // Assuming req.body is an array of session computer objects
         // Insert the session computers into the database
         Students.forEach(async element => {
-            await Student.create({
+            await ClassStudent.create({
                 StudentID: element["StudentID"],
-                FirstName: element["FirstName"],
-                LastName: element["LastName"],
-                ClassID: element["ClassID"]
+                ClassID: element["ClassID"],
+                
             });
 ``
         });
@@ -29,7 +28,27 @@ insert = async (req, res) => {
         });
     }
 };
+let getAllClasseStudent = async (req, res) => {
+    try {
+        const allClasses = await ClassStudent.findAll();
+
+        // Return success response with all classes
+        return res.status(200).json({
+            status: 'success',
+            data: allClasses,
+        });
+    } catch (error) {
+        // Handle error
+        console.error('Error fetching all classes:', error);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Failed to fetch all classes',
+            error: error.message,
+        });
+    }
+};
 
 module.exports = {
     insert,
+    getAllClasseStudent
 };

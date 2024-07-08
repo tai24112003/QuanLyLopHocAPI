@@ -1,6 +1,37 @@
 const Subject = require('../models/subject');
 const Chapter = require('../models/chapter');
+let insert = async (req, res, next) => {
+    try {
+        const { name } = req.body;
 
+        // Kiểm tra xem Subject đã tồn tại hay chưa
+        const existingSubject = await Subject.findOne({ where: { name } });
+
+        if (existingSubject) {
+            // Nếu Subject đã tồn tại, trả về thông báo
+            return res.status(201).json({
+                status: 'error',
+                message: 'Subject already exists',
+            });
+        }
+
+        // Nếu Subject chưa tồn tại, thêm mới vào bảng Subject
+        const newSubject = await Subject.create({ name });
+
+        // Trả về thông báo thành công và dữ liệu của Subject mới
+        return res.status(201).json({
+            status: 'success',
+            data: newSubject,
+        });
+    } catch (error) {
+        console.error('Error inserting subject:', error);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Failed to insert subject',
+            error: error.message,
+        });
+    }
+};
 let getList = async (req, res, next) => {
     let Subjects = await Subject.findAll({
         include: {
@@ -35,5 +66,6 @@ let getChapters = async (req, res, next) => {
 module.exports = {
     getList,
     get,
-    getChapters
+    getChapters,
+    insert
 };

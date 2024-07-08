@@ -25,6 +25,7 @@ module.exports = {
         id: 1,
         lastTimeUpdateUser: formattedDate,
         lastTimeUpdateSubject: formattedDate,
+        lastTimeUpdateClass: formattedDate,
       }
     ], {});
   },

@@ -7,5 +7,6 @@ let router = express.Router();
 router.get('/', SubjectController.getList);
 router.get('/chapter/:subject_id', SubjectController.getChapters);
 router.get('/:subject_id', SubjectController.get);
+router.post('/insert', SubjectController.insert);
 
 module.exports = router;

@@ -13,6 +13,10 @@ const room = require('./room')
 const asset = require('./asset');
 const Choice = require('./choice');
 const commonContent = require('./common_content');
+const Class = require('./class');
+const class_subject = require('./class_subject');
+const class_student = require('./class_student');
+const student = require('./student');
 
 function setRoute(server) {
 
@@ -41,6 +45,16 @@ function setRoute(server) {
     server.use('/api/room', room);
 
     server.use('/api/upload', asset);
+
+    server.use('/api/class', Class);
+
+    server.use('/api/student', student);
+
+    server.use('/api/class_subject', class_subject);
+
+    server.use('/api/class_student', class_student);
+
+
 
 }
 

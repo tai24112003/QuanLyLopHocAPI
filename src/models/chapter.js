@@ -13,7 +13,7 @@ const Chapter = sequelize.define(
       },
     subject_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
     },
   },
   {

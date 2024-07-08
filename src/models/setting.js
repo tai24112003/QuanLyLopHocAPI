@@ -13,6 +13,7 @@ const setting = sequelize.define(
         },
         lastTimeUpdateUser: { type: DataTypes.STRING, allowNull: false },
         lastTimeUpdateSubject: { type: DataTypes.STRING, allowNull: false },
+        lastTimeUpdateClass: { type: DataTypes.STRING, allowNull: false },
 
     },
     {

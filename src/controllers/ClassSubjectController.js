@@ -27,5 +27,27 @@ let insert = async (req, res) => {
         });
     }
 };
+let getAllActiveClassSubjects = async (req, res) => {
+    try {
+        const activeClassSubjects = await ClassSubject.findAll({
+            where: {
+                status: 1,
+            },
+        });
 
-module.exports = { insert };
+        // Return success response with active class subjects
+        return res.status(200).json({
+            status: 'success',
+            data: activeClassSubjects,
+        });
+    } catch (error) {
+        // Handle error
+        console.error('Error fetching active class subjects:', error);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Failed to fetch active class subjects',
+            error: error.message,
+        });
+    }
+};
+module.exports = { insert,getAllActiveClassSubjects };
