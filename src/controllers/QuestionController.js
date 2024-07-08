@@ -10,6 +10,7 @@ const {
 const Subject = require("../models/subject");
 const Chapter = require("../models/chapter");
 const { Op } = require("sequelize");
+const ExamQuestion = require("../models/exam_question");
 
 let getList = async (req, res) => {
   try {
@@ -67,15 +68,25 @@ let getList = async (req, res) => {
       order: [["createdAt", "DESC"]],
     });
 
+    let examQuestionIds = await ExamQuestion.findAll({
+      where: {
+        questionId: Questions.map((question) => question.id),
+      },
+      attributes: ["questionId"],
+    });
+
+    examQuestionIds = examQuestionIds.map((e) => e.questionId);
+
     Questions = Questions.map((question) => ({
       ...question.dataValues,
       common_content: question.common_content?.content,
       subject_id: question.Chapter.Subject.id,
-      canRemove: true,
+      canRemove: !examQuestionIds.includes(question.id),
     }));
 
     return sendSuccessResponse(res, Questions);
   } catch (error) {
+    console.log(error);
     return sendInternalErrorResponse(res);
   }
 };
@@ -120,10 +131,10 @@ let create = async (req, res) => {
         })
       );
 
-      newQuestion.choices = createdChoices;
+      newQuestion.setDataValue("choices", createdChoices);
     }
-    await transaction.commit();
 
+    await transaction.commit();
     return sendSuccessResponse(res, newQuestion);
   } catch (error) {
     if (transaction) await transaction.rollback();
