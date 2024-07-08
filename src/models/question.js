@@ -68,6 +68,7 @@ Question.belongsToMany(Exam, {
   foreignKey: "questionId",
   as: "exams",
 });
+
 Question.hasMany(ExamQuestion, {
   foreignKey: "questionId",
   as: "examQuestions",

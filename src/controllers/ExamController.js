@@ -143,6 +143,8 @@ let getExamById = async (req, res) => {
         difficulty: e.difficulty,
         chapter_id: e.chapter_id,
         subject_id: e.Chapter.subject_id,
+        subject: e.Chapter.Subject.name,
+        chapter: e.Chapter.name,
       }))
     );
 
