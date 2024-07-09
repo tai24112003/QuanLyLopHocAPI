@@ -1,37 +1,52 @@
 const express = require("express");
 
-const adminRouter = require('./admin');
-const subject = require('./subject');
-const chapter = require('./chapter');
-const user = require('./user');
-const question = require('./question');
-const setting = require('./setting')
-const computer = require('./computer')
-const class_sessions = require('./class_session')
-const session_computer = require('./session_computer')
-const room = require('./room')
-const asset = require('./asset');
-const Choice = require('./choice');
-const Class = require('./class');
-const class_student = require('./class_student');
-const student = require('./student');
-const exam = require('./exam');
+const adminRouter = require("./admin");
+const subject = require("./subject");
+const chapter = require("./chapter");
+const user = require("./user");
+const question = require("./question");
+const setting = require("./setting");
+const computer = require("./computer");
+const class_sessions = require("./class_session");
+const session_computer = require("./session_computer");
+const room = require("./room");
+const asset = require("./asset");
+const Choice = require("./choice");
+const Class = require("./class");
+const class_student = require("./class_student");
+const student = require("./student");
+const exam = require("./exam");
+const adminRouter = require("./admin");
+const subject = require("./subject");
+const chapter = require("./chapter");
+const user = require("./user");
+const question = require("./question");
+const setting = require("./setting");
+const computer = require("./computer");
+const class_sessions = require("./class_session");
+const session_computer = require("./session_computer");
+const room = require("./room");
+const asset = require("./asset");
+const exam = require("./exam");
+const auth = require("./auth");
+const Choice = require("./choice");
 const commonContent = require("./common_content");
+const authenticateToken = require("../midlewares/verifyToken");
 
 function setRoute(server) {
-  server.use("/api/admin", adminRouter);
+  server.use("/api/admin", authenticateToken, adminRouter);
 
-  server.use("/api/user", user);
+  server.use("/api/user", authenticateToken, user);
 
-  server.use("/api/subject", subject);
+  server.use("/api/subject", authenticateToken, subject);
 
-  server.use("/api/chapter", chapter);
+  server.use("/api/chapter", authenticateToken, chapter);
 
-  server.use("/api/question", question);
+  server.use("/api/question", authenticateToken, question);
 
-  server.use("/api/common-content", commonContent);
+  server.use("/api/common-content", authenticateToken, commonContent);
 
-  server.use("/api/choice", Choice);
+  server.use("/api/choice", authenticateToken, Choice);
 
   server.use("/api/setting", setting);
 
@@ -43,17 +58,17 @@ function setRoute(server) {
 
   server.use("/api/room", room);
 
-  server.use("/api/upload", asset);
+  server.use("/api/upload", authenticateToken, asset);
 
-  server.use('/api/class', Class);
+  server.use("/api/class", Class);
 
-  server.use('/api/student', student);
+  server.use("/api/student", student);
 
-  server.use('/api/class_student', class_student);
+  server.use("/api/class_student", class_student);
 
+  server.use("/api/exam", authenticateToken, exam);
 
-
-  server.use("/api/exam", exam);
+  server.use("/api/auth", auth);
 }
 
 module.exports = setRoute;

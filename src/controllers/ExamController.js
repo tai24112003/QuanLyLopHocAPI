@@ -12,17 +12,25 @@ const {
 const CommonContent = require("../models/common_content");
 const Choice = require("../models/choice");
 const Chapter = require("../models/chapter");
+const { Op } = require("sequelize");
 
 let createExam = async (req, res) => {
   let transaction;
   try {
-    const { code, subject_id, duration, questionCount, name, questions } =
-      req.body;
+    const {
+      code,
+      subject_id,
+      duration,
+      questionCount,
+      name,
+      questions,
+      authorId,
+    } = req.body;
 
     transaction = await sequelize.transaction();
 
     const exam = await Exam.create(
-      { code, subject_id, duration, questionCount, name },
+      { code, subject_id, duration, questionCount, name, authorId },
       { transaction }
     );
 
@@ -50,7 +58,11 @@ let createExam = async (req, res) => {
 
 let getList = async (req, res) => {
   try {
+    let idUser = req.user.id;
     const exams = await Exam.findAll({
+      where: {
+        [Op.or]: [{ authorId: idUser }, { authorId: null }],
+      },
       attributes: [
         "id",
         "code",

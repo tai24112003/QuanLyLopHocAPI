@@ -3,6 +3,7 @@ const { sequelize } = require("../configs/database");
 const Question = require("./question");
 const ExamQuestion = require("./exam_question");
 const Subject = require("./subject");
+const User = require("./user");
 
 const Exam = sequelize.define(
   "Exam",
@@ -32,6 +33,10 @@ const Exam = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    authorId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     tableName: "Exams",
@@ -49,6 +54,11 @@ Exam.belongsTo(Subject, {
 Exam.hasMany(ExamQuestion, {
   foreignKey: "examId",
   as: "examQuestions",
+});
+
+Exam.belongsTo(User, {
+  foreignKey: "authorId",
+  as: "author",
 });
 
 module.exports = Exam;

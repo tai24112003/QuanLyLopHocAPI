@@ -136,6 +136,10 @@ let updateSubjectById = async (req, res, next) => {
 
   let transaction;
 
+  if (!name) {
+    return sendErrorResponse(res, "Name are required");
+  }
+
   try {
     transaction = await sequelize.transaction();
     const subject = await Subject.findByPk(id, { transaction });
@@ -163,14 +167,21 @@ let updateSubjectById = async (req, res, next) => {
 };
 
 let createSubject = async (req, res, next) => {
-  const { name } = req.body;
+  const { name, authorId } = req.body;
 
   let transaction;
+
+  if (!name) {
+    return sendErrorResponse(res, "Name are required");
+  }
 
   try {
     transaction = await sequelize.transaction();
 
-    const newSubject = await Subject.create({ name }, { transaction });
+    const newSubject = await Subject.create(
+      { name, authorId },
+      { transaction }
+    );
 
     await transaction.commit();
     return sendSuccessResponse(res, newSubject);
