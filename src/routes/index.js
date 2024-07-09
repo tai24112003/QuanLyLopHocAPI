@@ -12,11 +12,10 @@ const session_computer = require('./session_computer')
 const room = require('./room')
 const asset = require('./asset');
 const Choice = require('./choice');
-const commonContent = require('./common_content');
 const Class = require('./class');
-const class_subject = require('./class_subject');
 const class_student = require('./class_student');
 const student = require('./student');
+const exam = require('./exam');
 const commonContent = require("./common_content");
 
 function setRoute(server) {
@@ -46,13 +45,11 @@ function setRoute(server) {
 
   server.use("/api/upload", asset);
 
-    server.use('/api/class', Class);
+  server.use('/api/class', Class);
 
-    server.use('/api/student', student);
+  server.use('/api/student', student);
 
-    server.use('/api/class_subject', class_subject);
-
-    server.use('/api/class_student', class_student);
+  server.use('/api/class_student', class_student);
 
 
 

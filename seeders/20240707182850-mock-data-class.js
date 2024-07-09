@@ -14,13 +14,19 @@ module.exports = {
     */
     await queryInterface.bulkInsert('classes', [
       {
-        ClassName: "CD TH 21 B"
+        ClassName: "CD TH 21 B - Nhập môn lập trình",
+        Status: 1,
+        UserID: 1
       },
       {
-        ClassName: "CD TH 21 DD"
+        ClassName: "CD TH 21 DD - Lập trình nhúng",
+        Status: 1,
+        UserID: 1
       },
       {
-        ClassName: "CD TH 21 WEBC"
+        ClassName: "CD TH 21 WEBC - Lập trình front end",
+        Status: 1,
+        UserID: 1
       }
       // Thêm nhiều lớp học khác nếu cần
     ], {});

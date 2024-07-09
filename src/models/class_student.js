@@ -19,6 +19,7 @@ const ClassStudent = sequelize.define('Class_Student', {
             key: 'StudentID',
         },
     },
+    
 }, {
     timestamps: false,
 });
