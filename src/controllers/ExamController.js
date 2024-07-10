@@ -88,7 +88,39 @@ let getList = async (req, res) => {
   }
 };
 
-let getExamById = async (req, res) => {
+let getListFromWinForm = async (req, res) => {
+  try {
+    let idUser = req.body.id;
+    const exams = await Exam.findAll({
+      where: {
+        [Op.or]: [{ authorId: idUser }, { shared: 1 }],
+      },
+      attributes: [
+        "id",
+        "code",
+        "duration",
+        "questionCount",
+        "name",
+        "createdAt",
+      ],
+      include: [
+        {
+          model: Subject,
+          attributes: ["name"], // Chỉ lấy trường 'name' của Subject
+          as: "subject",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+
+    return sendSuccessResponse(res, exams);
+  } catch (error) {
+    console.error("Error fetching exam list:", error);
+    return sendInternalErrorResponse(res);
+  }
+};
+
+let getExamByIdWinform = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -115,6 +147,115 @@ let getExamById = async (req, res) => {
 
     const exam = await Exam.findOne({
       where: { id },
+      include: [
+        {
+          model: Subject,
+          attributes: ["name"],
+          as: "subject",
+        },
+        {
+          model: ExamQuestion,
+          attributes: ["questionId"],
+          as: "examQuestions",
+        },
+      ],
+    });
+
+    if (!exam) {
+      return res.status(404).json({ message: "Exam not found" });
+    }
+
+    const questionIds = exam.examQuestions.map(
+      (examQuestion) => examQuestion.questionId
+    );
+
+    let questions = await Question.findAll({
+      where: { id: questionIds },
+      include: includeConditions,
+      attributes: [
+        "id",
+        "content",
+        "chapter_id",
+        "type_id",
+        "difficulty",
+        "common_content_id",
+      ],
+    });
+
+    let formattedQuestions = [];
+    let commonContentQuestions = [];
+
+    questions.forEach((q) => {
+      const answers = q.choices
+        .filter((choice) => choice.is_correct)
+        .map((choice) => choice.content);
+      if (q.type_id === 1 && q.common_content_id) {
+        if (!commonContentQuestions[q.common_content_id]) {
+          commonContentQuestions[q.common_content_id] = {
+            id: q.common_content_id,
+            type: 1,
+            question: q.common_content?.content || "",
+            questions: [],
+          };
+        }
+        commonContentQuestions[q.common_content_id].questions.push({
+          id: q.id,
+          type: q.type_id,
+          question: q.content,
+          options: q.choices.map((choice) => choice.content),
+          answer: answers,
+        });
+      } else if (q.type_id === 2) {
+        formattedQuestions.push({
+          id: q.id,
+          type: q.type_id,
+          question: q.content,
+          options: q.choices.map((choice) => choice.content),
+          answer: answers,
+        });
+      }
+    });
+    formattedQuestions = formattedQuestions.concat(
+      Object.values(commonContentQuestions)
+    );
+
+    exam.setDataValue("questions", formattedQuestions);
+
+    return sendSuccessResponse(res, exam);
+  } catch (error) {
+    console.error("Error fetching exam:", error);
+    return sendInternalErrorResponse(res);
+  }
+};
+
+let getExamById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const idUser = req.user.id;
+
+    let includeConditions = [
+      {
+        model: CommonContent,
+        as: "common_content",
+        attributes: ["id", "content"],
+        required: false,
+      },
+      {
+        model: Choice,
+        as: "choices",
+      },
+      {
+        model: Chapter,
+        include: [
+          {
+            model: Subject,
+          },
+        ],
+      },
+    ];
+
+    const exam = await Exam.findOne({
+      where: { id, [Op.or]: [{ authorId: idUser }, { shared: 1 }] },
       include: [
         {
           model: Subject,
@@ -171,4 +312,6 @@ module.exports = {
   createExam,
   getList,
   getExamById,
+  getListFromWinForm,
+  getExamByIdWinform,
 };
