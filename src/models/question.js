@@ -5,6 +5,7 @@ const Choice = require("./choice");
 const Chapter = require("./chapter");
 const Exam = require("./exam");
 const ExamQuestion = require("./exam_question");
+const User = require("./user");
 
 const Question = sequelize.define(
   "Question",
@@ -33,6 +34,14 @@ const Question = sequelize.define(
     chapter_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    authorId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    shared: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
   },
   {
@@ -72,6 +81,11 @@ Question.belongsToMany(Exam, {
 Question.hasMany(ExamQuestion, {
   foreignKey: "questionId",
   as: "examQuestions",
+});
+
+Question.belongsTo(User, {
+  foreignKey: "authorId",
+  as: "author",
 });
 
 module.exports = Question;

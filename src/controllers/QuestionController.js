@@ -11,12 +11,15 @@ const Subject = require("../models/subject");
 const Chapter = require("../models/chapter");
 const { Op } = require("sequelize");
 const ExamQuestion = require("../models/exam_question");
+const User = require("../models/user");
 
 let getList = async (req, res) => {
   try {
     const { q, subject_id, difficult, chapter_id } = req.query;
-
-    let whereConditions = {};
+    const idUser = req.user.id;
+    let whereConditions = {
+      [Op.or]: [{ authorId: idUser }, { shared: 1 }],
+    };
     let includeConditions = [
       {
         model: CommonContent,
@@ -36,13 +39,23 @@ let getList = async (req, res) => {
           },
         ],
       },
+      {
+        model: User,
+        as: "author",
+        attributes: ["user_id", "name"],
+      },
     ];
 
     if (q) {
       whereConditions = {
-        [Op.or]: [
-          { content: { [Op.like]: `%${q}%` } },
-          { "$common_content.content$": { [Op.like]: `%${q}%` } },
+        [Op.and]: [
+          whereConditions,
+          {
+            [Op.or]: [
+              { content: { [Op.like]: `%${q}%` } },
+              { "$common_content.content$": { [Op.like]: `%${q}%` } },
+            ],
+          },
         ],
       };
     }
@@ -67,7 +80,7 @@ let getList = async (req, res) => {
       include: includeConditions,
       order: [["createdAt", "DESC"]],
     });
-
+    console.log(Questions);
     let examQuestionIds = await ExamQuestion.findAll({
       where: {
         questionId: Questions.map((question) => question.id),
@@ -103,6 +116,7 @@ let create = async (req, res) => {
       common_content_id,
       chapter_id,
       choices,
+      authorId,
     } = req.body;
     transaction = await sequelize.transaction();
 
@@ -113,6 +127,7 @@ let create = async (req, res) => {
         difficulty,
         common_content_id,
         chapter_id,
+        authorId,
       },
       { transaction }
     );
@@ -391,6 +406,60 @@ const update = async (req, res) => {
   }
 };
 
+const setPublic = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const idUser = req.user.id;
+
+    let question = await Question.findOne({
+      where: {
+        id: id,
+        authorId: idUser,
+      },
+    });
+
+    if (!question) {
+      return sendErrorResponse(res, "Question not found", 404);
+    }
+
+    question.shared = 1;
+
+    await question.save();
+
+    return sendSuccessResponse(res, question);
+  } catch (error) {
+    console.error("Error updating question:", error);
+    return sendInternalErrorResponse(res);
+  }
+};
+
+const setPrivate = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const idUser = req.user.id;
+
+    let question = await Question.findOne({
+      where: {
+        id: id,
+        authorId: idUser,
+      },
+    });
+
+    if (!question) {
+      return sendErrorResponse(res, "Question not found", 404);
+    }
+
+    question.shared = null;
+
+    await question.save();
+
+    return sendSuccessResponse(res, question);
+  } catch (error) {
+    console.error("Error updating question:", error);
+    return sendInternalErrorResponse(res);
+  }
+};
+
 const remove = async (req, res) => {
   try {
     const { id } = req.params;
@@ -422,7 +491,7 @@ const remove = async (req, res) => {
 };
 
 const validate = (data) => {
-  const { type_id, content, difficulty, chapter_id } = data;
+  const { type_id, content, difficulty, chapter_id, authorId } = data;
   const errors = {};
 
   // Validate type_id
@@ -459,4 +528,6 @@ module.exports = {
   update,
   remove,
   createOrUpdateMany,
+  setPublic,
+  setPrivate,
 };
