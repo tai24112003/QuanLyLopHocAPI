@@ -11,8 +11,7 @@ const setting = sequelize.define(
             allowNull: false,
             primaryKey: true,
         },
-        lastTimeUpdateUser: { type: DataTypes.STRING, allowNull: false },
-        lastTimeUpdateSubject: { type: DataTypes.STRING, allowNull: false },
+        lastTimeUpdateStudent: { type: DataTypes.STRING, allowNull: false },
         lastTimeUpdateClass: { type: DataTypes.STRING, allowNull: false },
 
     },

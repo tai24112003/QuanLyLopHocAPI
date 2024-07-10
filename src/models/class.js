@@ -20,8 +20,9 @@ const Class = sequelize.define('Class', {
             key: 'user_id',
         },
     },
+    LastTime: { type: DataTypes.DATE, allowNull: false },
 }, {
-    timestamps: false,
+    timestamps: false, 
     tableName: 'Classes'
 });
 

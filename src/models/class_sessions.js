@@ -7,7 +7,6 @@ const Subject = require('./subject');
 
 const ClassSession = sequelize.define('Class_Session', {
     SessionID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    ClassName: { type: DataTypes.STRING },
     Session: { type: DataTypes.INTEGER },
     StartTime: { type: DataTypes.DATE },
     EndTime: { type: DataTypes.DATE }
@@ -19,6 +18,5 @@ const ClassSession = sequelize.define('Class_Session', {
 ClassSession.belongsTo(User, { foreignKey: 'user_id' });
 ClassSession.belongsTo(Room, { foreignKey: 'RoomID' });
 ClassSession.belongsTo(Class, { foreignKey: 'ClassID' });
-ClassSession.belongsTo(Subject, { foreignKey: 'SubjectID' });
 
 module.exports = ClassSession;

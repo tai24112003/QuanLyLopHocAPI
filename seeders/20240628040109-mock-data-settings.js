@@ -23,8 +23,7 @@ module.exports = {
     await queryInterface.bulkInsert('settings', [
       {
         id: 1,
-        lastTimeUpdateUser: formattedDate,
-        lastTimeUpdateSubject: formattedDate,
+        lastTimeUpdateStudent: formattedDate,
         lastTimeUpdateClass: formattedDate,
       }
     ], {});
