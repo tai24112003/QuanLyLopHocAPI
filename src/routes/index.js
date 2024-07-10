@@ -15,6 +15,7 @@ const session_computer = require("./session_computer");
 const room = require("./room");
 const asset = require("./asset");
 const exam = require("./exam");
+const exam_winform = require("./exam_winform");
 const auth = require("./auth");
 const Choice = require("./choice");
 const commonContent = require("./common_content");
@@ -54,6 +55,8 @@ function setRoute(server) {
   server.use("/api/class_student", class_student);
 
   server.use("/api/exam", authenticateToken, exam);
+
+  server.use("/api/public/exam", exam_winform);
 
   server.use("/api/auth", auth);
 }
