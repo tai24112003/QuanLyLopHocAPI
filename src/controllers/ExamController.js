@@ -61,7 +61,7 @@ let getList = async (req, res) => {
     let idUser = req.user.id;
     const exams = await Exam.findAll({
       where: {
-        [Op.or]: [{ authorId: idUser }, { authorId: null }],
+        [Op.or]: [{ authorId: idUser }, { shared: 1 }],
       },
       attributes: [
         "id",

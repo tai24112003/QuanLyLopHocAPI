@@ -11,13 +11,14 @@ const Subject = require("../models/subject");
 const Chapter = require("../models/chapter");
 const { Op } = require("sequelize");
 const ExamQuestion = require("../models/exam_question");
+const User = require("../models/user");
 
 let getList = async (req, res) => {
   try {
     const { q, subject_id, difficult, chapter_id } = req.query;
     const idUser = req.user.id;
     let whereConditions = {
-      [Op.or]: [{ authorId: idUser }, { authorId: null }],
+      [Op.or]: [{ authorId: idUser }, { shared: 1 }],
     };
     let includeConditions = [
       {
@@ -37,6 +38,11 @@ let getList = async (req, res) => {
             model: Subject,
           },
         ],
+      },
+      {
+        model: User,
+        as: "author",
+        attributes: ["user_id", "name"],
       },
     ];
 
@@ -74,7 +80,7 @@ let getList = async (req, res) => {
       include: includeConditions,
       order: [["createdAt", "DESC"]],
     });
-
+    console.log(Questions);
     let examQuestionIds = await ExamQuestion.findAll({
       where: {
         questionId: Questions.map((question) => question.id),
@@ -410,14 +416,40 @@ const setPublic = async (req, res) => {
         id: id,
         authorId: idUser,
       },
-      include: [{ model: Choice, as: "choices" }],
     });
 
     if (!question) {
       return sendErrorResponse(res, "Question not found", 404);
     }
 
-    question.authorId = null;
+    question.shared = 1;
+
+    await question.save();
+
+    return sendSuccessResponse(res, question);
+  } catch (error) {
+    console.error("Error updating question:", error);
+    return sendInternalErrorResponse(res);
+  }
+};
+
+const setPrivate = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const idUser = req.user.id;
+
+    let question = await Question.findOne({
+      where: {
+        id: id,
+        authorId: idUser,
+      },
+    });
+
+    if (!question) {
+      return sendErrorResponse(res, "Question not found", 404);
+    }
+
+    question.shared = null;
 
     await question.save();
 
@@ -497,4 +529,5 @@ module.exports = {
   remove,
   createOrUpdateMany,
   setPublic,
+  setPrivate,
 };

@@ -5,11 +5,9 @@ const { sendSuccessResponse, sendErrorResponse } = require("../ultis/response");
 
 let getList = async (req, res, next) => {
   try {
-    const idUser = req.user.id;
     let chapters = await Chapter.findAll({
       include: {
         model: Subject,
-        where: { authorId: idUser },
       },
     });
 

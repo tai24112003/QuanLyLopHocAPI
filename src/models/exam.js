@@ -37,6 +37,10 @@ const Exam = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    shared: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     tableName: "Exams",

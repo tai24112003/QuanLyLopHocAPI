@@ -1,4 +1,8 @@
 const User = require("../models/user");
+const {
+  sendSuccessResponse,
+  sendInternalErrorResponse,
+} = require("../ultis/response");
 
 let getUsersByRole = async (req, res, next) => {
   let role = req.params.role;
@@ -19,7 +23,7 @@ let getUser = async (req, res, next) => {
     let id = req.user.id;
     let Teachers = await User.findAll({
       where: {
-        role: role,
+        user_id: id,
       },
       attributes: ["user_id", "email", "name", "phone", "role"],
     });
@@ -37,7 +41,24 @@ let getUser = async (req, res, next) => {
   }
 };
 
+let getAllUser = async (req, res, next) => {
+  try {
+    let Teachers = await User.findAll({
+      attributes: ["user_id", "email", "name", "phone", "role"],
+    });
+
+    if (!Teachers) {
+      return sendErrorResponse(res, "User not found", 404);
+    }
+
+    return sendSuccessResponse(res, Teachers);
+  } catch (e) {
+    return sendInternalErrorResponse(res);
+  }
+};
+
 module.exports = {
   getUsersByRole,
   getUser,
+  getAllUser,
 };
