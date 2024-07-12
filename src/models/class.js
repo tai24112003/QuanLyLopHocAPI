@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../configs/database');
-
+const User = require('./user')
 const Class = sequelize.define('Class', {
     ClassID: {
         type: DataTypes.INTEGER,
@@ -14,15 +14,14 @@ const Class = sequelize.define('Class', {
     Status: { type: DataTypes.BOOLEAN },
     UserID: {
         type: DataTypes.INTEGER,
-        primaryKey: true, // Đặt cột ClassID là khóa chính
         references: {
-            model: 'User',
+            model: User,
             key: 'user_id',
         },
     },
-    LastTime: { type: DataTypes.DATE, allowNull: false },
+    LastTime: { type: DataTypes.STRING, allowNull: false },
 }, {
-    timestamps: false, 
+    timestamps: false,
     tableName: 'Classes'
 });
 

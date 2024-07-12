@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../configs/database');
-
+const Student = require('./student');
+const Class_Sessions = require('./class_sessions');
+const Computers = require('./computer');
 const Session_Computer = sequelize.define('Session_Computer', {
     ID: {
         type: DataTypes.INTEGER,
@@ -12,16 +14,19 @@ const Session_Computer = sequelize.define('Session_Computer', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Class_Sessions',
+            model: Class_Sessions,
             key: 'SessionID',
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
     },
-    ComputerID: {
-        type: DataTypes.INTEGER,
+    ComputerName: {
+        type: DataTypes.STRING,
         allowNull: false,
-
+        references: {
+            model: Computers,
+            key: 'ComputerName',
+        },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
     },
@@ -49,9 +54,7 @@ const Session_Computer = sequelize.define('Session_Computer', {
     RepairNote: {
         type: DataTypes.TEXT,
     },
-    StudentID: {
-        type: DataTypes.STRING(10),
-    },
+
 }, {
     tableName: 'Session_Computer',
     timestamps: false,
@@ -61,5 +64,6 @@ const Session_Computer = sequelize.define('Session_Computer', {
     {
         timestamps: false,
     });
+Session_Computer.belongsTo(Student, { foreignKey: 'StudentID' });
 
 module.exports = Session_Computer;

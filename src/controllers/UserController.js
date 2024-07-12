@@ -1,3 +1,4 @@
+const { Sequelize } = require("sequelize");
 const User = require("../models/user");
 const {
   sendSuccessResponse,
@@ -10,13 +11,37 @@ let getUsersByRole = async (req, res, next) => {
     where: {
       role: role,
     },
-    attributes: ["user_id", "email", "name", "phone", "role"],
   });
   return res.send({
     status: "success",
     data: Teachers,
   });
 };
+let getUserCanTeach = async (req, res, next) => {
+  try {
+    let rolesToInclude = ['PK', 'TK', 'GV'];
+
+    let Teachers = await User.findAll({
+      where: {
+        role: {
+          [Sequelize.Op.in]: rolesToInclude
+        }
+      }
+    });
+
+    return res.send({
+      status: "success1",
+      data: Teachers
+    });
+  } catch (error) {
+    return res.send({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
+
 
 let getUser = async (req, res, next) => {
   try {
@@ -61,4 +86,5 @@ module.exports = {
   getUsersByRole,
   getUser,
   getAllUser,
+  getUserCanTeach
 };

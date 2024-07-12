@@ -1,7 +1,7 @@
 const Classes = require('../models/class');
 let insert = async (req, res) => {
     try {
-        const { ClassName } = req.body;
+        const { ClassName, LastTime, UserID } = req.body;
 
         // Kiểm tra xem ClassName đã tồn tại hay chưa
         const existingClass = await Classes.findOne({ where: { ClassName } });
@@ -14,9 +14,9 @@ let insert = async (req, res) => {
                 ClassID: existingClass.ClassID,
             });
         }
-
+        console.log(ClassName);
         // Nếu ClassName chưa tồn tại, thêm mới vào bảng Classes
-        const newClass = await Classes.create({ ClassName });
+        const newClass = await Classes.create({ ClassName, LastTime, UserID, Status: 1 });
 
         // Trả về phản hồi thành công với ClassID
         return res.status(201).json({

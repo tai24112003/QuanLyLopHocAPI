@@ -5,9 +5,8 @@ const { sequelize } = require("../configs/database");
 const setting = sequelize.define(
     "setting",
     {
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+        ID: {
+            type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
         },
@@ -16,6 +15,7 @@ const setting = sequelize.define(
 
     },
     {
+        tableName: "setting",
         timestamps: false,
     }
 );

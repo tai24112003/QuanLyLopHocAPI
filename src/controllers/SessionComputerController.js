@@ -1,4 +1,4 @@
-const  SessionComputer  = require('../models/session_computer'); // Import your SessionComputer model
+const SessionComputer = require('../models/session_computer'); // Import your SessionComputer model
 
 
 // Endpoint to insert session computers
@@ -7,12 +7,16 @@ insert = async (req, res) => {
         const sessionComputers = req.body; // Assuming req.body is an array of session computer objects
         console.log(sessionComputers);
         // Insert the session computers into the database
+        const result = await SessionComputer.destroy({
+            where: { sessionID: sessionComputers[0]["SessionID"] }
+        });
+
         sessionComputers.forEach(async element => {
             await SessionComputer.create({
                 SessionID: element["SessionID"],
-                ComputerID: element["ComputerID"],
+                ComputerName: element["ComputerName"],
                 RAM: element["RAM"],
-                HDD: element["HHD"],
+                HDD: element["HD`D"],
                 CPU: element["CPU"],
                 MouseConnected: element["MouseConnected"],
                 KeyboardConnected: element["KeyboardConnected"],

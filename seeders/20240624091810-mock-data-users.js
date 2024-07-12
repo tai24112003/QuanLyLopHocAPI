@@ -1,19 +1,12 @@
 'use strict';
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-    await queryInterface.bulkInsert('Users', [
-
+    const users = [
       { email: 'nbphuc@caothang.edu.vn', name: 'Nguyễn Bá Phúc', phone: '5058408613', password: '123456', role: 'PK' },
       { email: 'vyni@caothang.edu.vn', name: 'Vũ Yến Ni', phone: '8506198423', password: '123456', role: 'GV' },
       { email: 'dtdinh@caothang.edu.vn', name: 'Dương Trọng Đính', phone: '2358748768', password: '123456', role: 'GV' },
@@ -42,19 +35,17 @@ module.exports = {
       { email: 'tranthean@caothang.edu.vn', name: 'Trần Thế An', phone: '2884027554', password: '123456', role: 'GV' },
       { email: 'dqvinh@caothang.edu.vn', name: 'Đặng Quang Vinh', phone: '3230535079', password: '123456', role: 'GV' },
       { email: 'tranminhthanh@caothang.edu.vn', name: 'Trần Minh Thành', phone: '9694106526', password: '123456', role: 'GV' },
-      { email: '', name: 'Võ Thị Vân Anh', phone: '2169475664', password: '123456', role: 'GV' },
+      { email: '', name: 'Võ Thị Vân Anh', phone: '2169475664', password: '123456', role: 'GV' }
+    ];
 
-      // Thêm nhiều người dùng khác nếu cần
-    ], {});
+    for (const user of users) {
+      user.password = await bcrypt.hash(user.password, saltRounds);
+    }
+
+    await queryInterface.bulkInsert('Users', users, {});
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
     await queryInterface.bulkDelete('Users', null, {});
   }
 };

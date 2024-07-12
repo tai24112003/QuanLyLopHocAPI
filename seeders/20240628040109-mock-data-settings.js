@@ -12,19 +12,24 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    let now = new Date();
-    // Lấy các thành phần ngày, tháng, năm
-    let day = now.getDate();
-    let month = now.getMonth() + 1; // Tháng bắt đầu từ 0, nên cần cộng 1
-    let year = now.getFullYear();
+    const currentDate = new Date();
+
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const year = currentDate.getFullYear();
+
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+
+    const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
 
     // Định dạng ngày tháng năm dưới dạng DD/MM/YYYY
-    let formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
-    await queryInterface.bulkInsert('settings', [
+    await queryInterface.bulkInsert('setting', [
       {
         id: 1,
-        lastTimeUpdateStudent: formattedDate,
-        lastTimeUpdateClass: formattedDate,
+        lastTimeUpdateStudent: formattedDateTime,
+        lastTimeUpdateClass: formattedDateTime,
       }
     ], {});
   },

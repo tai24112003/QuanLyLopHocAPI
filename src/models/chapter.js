@@ -8,12 +8,12 @@ const Chapter = sequelize.define(
   "Chapter",
   {
     name: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
     subject_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {
@@ -21,11 +21,11 @@ const Chapter = sequelize.define(
   }
 );
 
-Subject.hasMany(Chapter, { 
-    foreignKey:'subject_id'
-  });
-Chapter.belongsTo(Subject, { 
-    foreignKey:'subject_id'
-  });
+Subject.hasMany(Chapter, {
+  foreignKey: 'subject_id'
+});
+Chapter.belongsTo(Subject, {
+  foreignKey: 'subject_id'
+});
 
 module.exports = Chapter;

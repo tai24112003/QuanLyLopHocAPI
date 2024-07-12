@@ -3,9 +3,8 @@ const { sequelize } = require('../configs/database');
 const User = require('./user');
 const Room = require('./room');
 const Class = require('./class');
-const Subject = require('./subject');
 
-const ClassSession = sequelize.define('Class_Session', {
+const ClassSession = sequelize.define('Class_Sessions', {
     SessionID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     Session: { type: DataTypes.INTEGER },
     StartTime: { type: DataTypes.DATE },

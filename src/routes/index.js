@@ -12,6 +12,7 @@ const setting = require("./setting");
 const computer = require("./computer");
 const class_sessions = require("./class_session");
 const session_computer = require("./session_computer");
+const attendance = require("./attendance");
 const room = require("./room");
 const asset = require("./asset");
 const exam = require("./exam");
@@ -24,7 +25,7 @@ const authenticateToken = require("../midlewares/verifyToken");
 function setRoute(server) {
   server.use("/api/admin", authenticateToken, adminRouter);
 
-  server.use("/api/user", authenticateToken, user);
+  server.use("/api/user", user);
 
   server.use("/api/subject", authenticateToken, subject);
 
@@ -53,6 +54,8 @@ function setRoute(server) {
   server.use("/api/student", student);
 
   server.use("/api/class_student", class_student);
+
+  server.use("/api/attendance", attendance);
 
   server.use("/api/exam", authenticateToken, exam);
 

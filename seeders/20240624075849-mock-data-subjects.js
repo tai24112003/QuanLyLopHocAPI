@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add seed commands here.
      *
@@ -16,18 +16,12 @@ module.exports = {
     const subjectsData = [
       {
         name: 'Nhập môn lập trình',
-        createdAt: currentDate,
-        updatedAt: currentDate,
       },
       {
         name: 'Cấu trúc dữ liệu và giải thuật',
-        createdAt: currentDate,
-        updatedAt: currentDate,
       },
       {
         name: 'Thiết kế website',
-        createdAt: currentDate,
-        updatedAt: currentDate,
       },
       // Add more subjects as needed
     ];
@@ -36,7 +30,7 @@ module.exports = {
     await queryInterface.bulkInsert('subjects', subjectsData, {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *

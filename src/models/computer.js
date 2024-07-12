@@ -3,11 +3,7 @@ const { sequelize } = require('../configs/database');
 const Room = require('./room');
 
 const Computer = sequelize.define('Computer', {
-    ComputerID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+
     RoomID: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -18,6 +14,7 @@ const Computer = sequelize.define('Computer', {
     },
     ComputerName: {
         type: DataTypes.STRING,
+        primaryKey: true,
         allowNull: false
     },
     RAM: {

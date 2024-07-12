@@ -1,27 +1,20 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../configs/database');
+const Class = require('./class');
+const Student = require('./student');
 
 const ClassStudent = sequelize.define('Class_Student', {
-    ClassID: {
-        type: DataTypes.STRING,
-        primaryKey: true, // Đặt cột ClassID là khóa chính
-        references: {
-            model: 'Class',
-            key: 'ClassID',
-        },
-    },
-    StudentID: {
-        type: DataTypes.STRING,
-        primaryKey: true, // Đặt cột StudentID là khóa chính
-        allowNull: false,
-        references: {
-            model: 'Student',
-            key: 'StudentID',
-        },
-    },
-    
+    // Define attributes if needed
+
+
 }, {
     timestamps: false,
+    tableName: "classes_student"
 });
+
+ClassStudent.belongsTo(Class, { foreignKey: 'ClassID' });
+Class.hasMany(ClassStudent, { foreignKey: 'ClassID' });
+ClassStudent.belongsTo(Student, { foreignKey: 'StudentID' });
+Student.hasMany(ClassStudent, { foreignKey: 'StudentID' });
 
 module.exports = ClassStudent;
