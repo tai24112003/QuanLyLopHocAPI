@@ -19,9 +19,9 @@ module.exports = {
       const computer = {
         RoomID: 'F71',
         ComputerName: `F71-${String(i).padStart(2, '0')}`, // Generates F71-01 to F71-50
-        RAM: '16gb',
-        HDD: '512gb',
-        CPU: 'I5'
+        RAM: 'Capacity: 17179869184 bytes Speed: 3200 Manufacturer: 80CE000080CE  Part Number: M378A2G43 |Capacity: 17179869184 bytes Speed: 3200 Manufacturer: 80CE000080CE  Part Number: M378A2G43',
+        HDD: 'C;\, 217GB, D:\, 20GB, F:\, 465GB',
+        CPU: '12th Gen Intel(R) Core(TM) i5-12500'
       };
       computers.push(computer);
     }

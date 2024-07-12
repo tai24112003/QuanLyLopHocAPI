@@ -4,6 +4,6 @@ const computer = require('../controllers/ComputerController');
 
 let router = express.Router();
 
-router.get('/getAll', computer.getAll);
+router.get('/:RoomID', computer.getComputerByRoomID);
 
 module.exports = router;

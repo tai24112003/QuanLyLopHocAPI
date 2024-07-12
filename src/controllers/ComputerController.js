@@ -1,12 +1,14 @@
 const Computer = require('../models/computer');
 
-let getAll = async (req, res, next) => {
-    let sizes = await Computer.findAll({
-        data: "computer"
+let getComputerByRoomID = async (req, res, next) => {
+    const { RoomID } = req.params;
+
+    let computers = await Computer.findAll({
+        where: { RoomID: RoomID }
     });
-    return res.send({ data: sizes });
+    return res.send({ data: computers });
 }
 
 module.exports = {
-    getAll,
+    getComputerByRoomID,
 };
