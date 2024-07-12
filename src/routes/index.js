@@ -25,7 +25,7 @@ const authenticateToken = require("../midlewares/verifyToken");
 function setRoute(server) {
   server.use("/api/admin", authenticateToken, adminRouter);
 
-  server.use("/api/user", user);
+  server.use("/api/user", authenticateToken, user);
 
   server.use("/api/subject", authenticateToken, subject);
 
