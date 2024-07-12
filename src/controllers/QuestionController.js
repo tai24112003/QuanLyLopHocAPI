@@ -80,7 +80,6 @@ let getList = async (req, res) => {
       include: includeConditions,
       order: [["createdAt", "DESC"]],
     });
-    console.log(Questions);
     let examQuestionIds = await ExamQuestion.findAll({
       where: {
         questionId: Questions.map((question) => question.id),

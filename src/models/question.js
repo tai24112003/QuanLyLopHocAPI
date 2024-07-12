@@ -65,7 +65,7 @@ Question.hasMany(Choice, { foreignKey: "question_id", as: "choices" });
 Choice.belongsTo(Question, { foreignKey: "question_id", as: "question" });
 
 Question.belongsTo(Chapter, { foreignKey: "chapter_id" });
-Chapter.belongsTo(Question, { foreignKey: "chapter_id" });
+Chapter.hasMany(Question, { foreignKey: "chapter_id" });
 
 Exam.belongsToMany(Question, {
   through: ExamQuestion,

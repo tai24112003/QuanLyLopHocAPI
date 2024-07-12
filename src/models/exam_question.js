@@ -8,13 +8,9 @@ const Question = require("./question");
 const ExamQuestion = sequelize.define(
   "ExamQuestion",
   {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     examId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       allowNull: false,
       references: {
         model: Exam,
@@ -25,6 +21,7 @@ const ExamQuestion = sequelize.define(
     },
     questionId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       allowNull: false,
       references: {
         model: Question,
@@ -36,7 +33,7 @@ const ExamQuestion = sequelize.define(
   },
   {
     tableName: "Exam_Question",
-    timestamps: false, // Không cần timestamps nếu không có createdAt và updatedAt
+    timestamps: false,
   }
 );
 
