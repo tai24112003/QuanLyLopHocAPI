@@ -3,13 +3,19 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../configs/database");
 const User = require("./user");
 
-const Subject = sequelize.define("Subject", {
-  name: { type: DataTypes.TEXT, allowNull: false },
-  authorId: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
+const Subject = sequelize.define(
+  "Subject",
+  {
+    name: { type: DataTypes.TEXT, allowNull: false },
+    authorId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
-});
+  {
+    timestamps: false,
+  }
+);
 
 Subject.belongsTo(User, {
   foreignKey: "authorId",

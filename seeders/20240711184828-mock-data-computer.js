@@ -17,7 +17,7 @@ module.exports = {
     // Generating 50 computers
     for (let i = 1; i <= 50; i++) {
       const computer = {
-        RoomID: 'F71',
+        RoomID: 1,
         ComputerName: `F71-${String(i).padStart(2, '0')}`, // Generates F71-01 to F71-50
         RAM: 'Capacity: 17179869184 bytes Speed: 3200 Manufacturer: 80CE000080CE  Part Number: M378A2G43 |Capacity: 17179869184 bytes Speed: 3200 Manufacturer: 80CE000080CE  Part Number: M378A2G43',
         HDD: 'C;\, 217GB, D:\, 20GB, F:\, 465GB',
