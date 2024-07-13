@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -11,18 +11,22 @@ module.exports = {
      *   name: 'John Doe',
      *   isBetaMember: false
      * }], {});
-    */
-    await queryInterface.bulkInsert('rooms', [
-      {
-        RoomID: "F71",
-        NumberOfComputers: 50,
-        StandardRAM: "16gb",
-        StandardHDD: "512gb",
-        StandardCPU: "I5",
-        Status: "Trống"
-      }
-      // Thêm nhiều người dùng khác nếu cần
-    ], {});
+     */
+    await queryInterface.bulkInsert(
+      "rooms",
+      [
+        {
+          RoomName: "F71",
+          NumberOfComputers: 50,
+          StandardRAM: "16gb",
+          StandardHDD: "512gb",
+          StandardCPU: "I5",
+          Status: "Trống",
+        },
+        // Thêm nhiều người dùng khác nếu cần
+      ],
+      {}
+    );
   },
 
   async down(queryInterface, Sequelize) {
@@ -32,6 +36,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('rooms', null, {});
-  }
+    await queryInterface.bulkDelete("rooms", null, {});
+  },
 };

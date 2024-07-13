@@ -1,9 +1,13 @@
-const express = require('express');
+const express = require("express");
 
-const room = require('../controllers/RoomController');
+const room = require("../controllers/RoomController");
 
 let router = express.Router();
 
-router.get('/:id', room.getRoomByID);
+router.post("/", room.addRoom);
+router.delete("/:id", room.deleteRoom);
+router.put("/:id", room.updateRoom);
+router.get("/:id", room.getRoomByID);
+router.get("/", room.getAllRoom);
 
 module.exports = router;
