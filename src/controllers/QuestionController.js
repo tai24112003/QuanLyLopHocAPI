@@ -42,7 +42,7 @@ let getList = async (req, res) => {
       {
         model: User,
         as: "author",
-        attributes: ["user_id", "name"],
+        attributes: ["id", "name"],
       },
     ];
 

@@ -100,10 +100,13 @@ let getAttendanceByClassID = async (req, res) => {
 // Hàm sửa điểm danh
 let updateAttendance = async (req, res) => {
   try {
-    const { AttendanceID } = req.params;
-    const updatedAttendance = req.body;
+    const { StudentID, SessionID, ...updatedAttendance } = req.body;
 
-    const attendance = await Attendance.findByPk(AttendanceID);
+    // Find the attendance record by StudentID and SessionID
+    const attendance = await Attendance.findOne({
+      where: { StudentID, SessionID },
+    });
+    console.log(updatedAttendance);
     if (!attendance) {
       return res.status(404).json({
         status: "error",
@@ -111,6 +114,7 @@ let updateAttendance = async (req, res) => {
       });
     }
 
+    // Update the attendance record
     await attendance.update(updatedAttendance);
 
     return res.status(200).json({

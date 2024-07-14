@@ -70,6 +70,8 @@ let getList = async (req, res) => {
         "questionCount",
         "name",
         "createdAt",
+        "shared",
+        "authorId",
       ],
       include: [
         {
@@ -308,10 +310,56 @@ let getExamById = async (req, res) => {
   }
 };
 
+let toggleExamSharing = async (req, res) => {
+  try {
+    const { id } = req.params; // Exam ID
+    const idUser = req.user.id;
+
+    // Find the exam by ID and author or shared
+    const exam = await Exam.findOne({
+      where: { id, [Op.or]: [{ authorId: idUser }, { shared: 1 }] },
+      include: [
+        {
+          model: ExamQuestion,
+          attributes: ["questionId"],
+          as: "examQuestions",
+        },
+      ],
+    });
+
+    if (!exam) {
+      return res.status(404).json({ message: "Exam not found" });
+    }
+
+    // Toggle the shared attribute of the exam
+    exam.shared = exam.shared ? null : 1;
+    await exam.save();
+
+    // Get the question IDs related to the exam
+    const questionIds = exam.examQuestions.map(
+      (examQuestion) => examQuestion.questionId
+    );
+
+    // Update the shared attribute of related questions
+    await Question.update(
+      { shared: exam.shared },
+      { where: { id: questionIds } }
+    );
+
+    return sendSuccessResponse(res, {
+      message: "Exam and related questions updated successfully",
+    });
+  } catch (error) {
+    console.error("Error toggling exam sharing:", error);
+    return sendInternalErrorResponse(res);
+  }
+};
+
 module.exports = {
   createExam,
   getList,
   getExamById,
   getListFromWinForm,
   getExamByIdWinform,
+  toggleExamSharing,
 };
