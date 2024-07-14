@@ -67,11 +67,16 @@ let getClassesByUserId = async (req, res) => {
     const userId = req.user.id; // Get UserID from request parameters
 
     // Fetch classes associated with the specific UserID
-    const userClasses = await Classes.findAll({
-      where: {
-        UserID: userId, // Assuming 'UserID' is the correct field in your Classes model
-      },
-    });
+    let userClasses;
+    if (req.user.role === "GV") {
+      userClasses = await Classes.findAll({
+        where: {
+          UserID: userId, // Assuming 'UserID' is the correct field in your Classes model
+        },
+      });
+    } else {
+      userClasses = await Classes.findAll();
+    }
 
     // Return success response with the classes for the specified UserID
     return sendSuccessResponse(res, userClasses);
