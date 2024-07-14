@@ -20,6 +20,7 @@ const exam_winform = require("./exam_winform");
 const auth = require("./auth");
 const Choice = require("./choice");
 const commonContent = require("./common_content");
+const answer = require("./submisstion");
 const authenticateToken = require("../midlewares/verifyToken");
 
 function setRoute(server) {
@@ -54,6 +55,8 @@ function setRoute(server) {
   server.use("/api/class_student", class_student);
 
   server.use("/api/attendance", attendance);
+
+  server.use("/api/submisstion", answer);
 
   server.use("/api/exam", authenticateToken, exam);
 
