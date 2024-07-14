@@ -6,6 +6,6 @@ let router = express.Router();
 
 router.post("/insert", attendance.insert);
 router.get("/:classID", attendance.getAttendanceByClassID);
-router.put("/attendance/:AttendanceID", attendance.updateAttendance);
+router.put("/", attendance.updateAttendance);
 
 module.exports = router;

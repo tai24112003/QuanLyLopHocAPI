@@ -11,7 +11,7 @@ const {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email, status: null } });
 
     if (!user) {
       return sendErrorResponse(
@@ -32,7 +32,7 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.user_id, username: user.name, role: user.role },
+      { id: user.id, username: user.name, role: user.role },
       process.env.SECRET_KEY,
       { expiresIn: "48h" }
     );
