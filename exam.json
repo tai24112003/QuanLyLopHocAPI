@@ -1,0 +1,530 @@
+{
+        "id": 2,
+        "code": "LYLF8IJV9VX9B",
+        "duration": 15,
+        "questionCount": 10,
+        "subject_id": 1,
+        "name": "Kiểm tra 15p nhập môn lập trình",
+        "authorId": 1,
+        "shared": 1,
+        "createdAt": "2024-07-14T10:38:05.000Z",
+        "updatedAt": "2024-07-14T10:38:41.000Z",
+        "deletedAt": null,
+        "subject": {
+            "name": "Nhập môn lập trình"
+        },
+        "examQuestions": [
+            {
+                "questionId": 2
+            },
+            {
+                "questionId": 3
+            },
+            {
+                "questionId": 4
+            },
+            {
+                "questionId": 5
+            },
+            {
+                "questionId": 6
+            },
+            {
+                "questionId": 7
+            },
+            {
+                "questionId": 8
+            },
+            {
+                "questionId": 9
+            },
+            {
+                "questionId": 10
+            },
+            {
+                "questionId": 11
+            }
+        ],
+        "questions": [
+            {
+                "id": 2,
+                "type_id": 2,
+                "content": "<p>Khái niệm lập trình?</p>",
+                "choices": [
+                    {
+                        "id": 5,
+                        "question_id": 2,
+                        "content": "Quá trình tạo ra hình ảnh",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:24:34.000Z",
+                        "updatedAt": "2024-07-14T10:24:34.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 6,
+                        "question_id": 2,
+                        "content": "Quá trình tạo ra các chương trình máy tính",
+                        "is_correct": true,
+                        "createdAt": "2024-07-14T10:24:34.000Z",
+                        "updatedAt": "2024-07-14T10:24:34.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 7,
+                        "question_id": 2,
+                        "content": "Quá trình viết tài liệu",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:24:34.000Z",
+                        "updatedAt": "2024-07-14T10:24:34.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 8,
+                        "question_id": 2,
+                        "content": "Quá trình sửa lỗi phần cứng",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:24:34.000Z",
+                        "updatedAt": "2024-07-14T10:24:34.000Z",
+                        "deletedAt": null
+                    }
+                ],
+                "difficulty": 1,
+                "chapter_id": 1,
+                "subject_id": 1,
+                "subject": "Nhập môn lập trình",
+                "chapter": "Biến và Hằng"
+            },
+            {
+                "id": 3,
+                "type_id": 2,
+                "content": "<p>Ngôn ngữ &nbsp;nào dưới đây không là ngôn ngữ lập trình?</p>",
+                "choices": [
+                    {
+                        "id": 9,
+                        "question_id": 3,
+                        "content": "Python",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:26:04.000Z",
+                        "updatedAt": "2024-07-14T10:26:04.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 10,
+                        "question_id": 3,
+                        "content": "JavaScript",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:26:04.000Z",
+                        "updatedAt": "2024-07-14T10:26:04.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 11,
+                        "question_id": 3,
+                        "content": "HTML",
+                        "is_correct": true,
+                        "createdAt": "2024-07-14T10:26:04.000Z",
+                        "updatedAt": "2024-07-14T10:26:04.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 12,
+                        "question_id": 3,
+                        "content": "Ruby",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:26:04.000Z",
+                        "updatedAt": "2024-07-14T10:26:04.000Z",
+                        "deletedAt": null
+                    }
+                ],
+                "difficulty": 1,
+                "chapter_id": 1,
+                "subject_id": 1,
+                "subject": "Nhập môn lập trình",
+                "chapter": "Biến và Hằng"
+            },
+            {
+                "id": 4,
+                "type_id": 2,
+                "content": "<p>Biến (Variable) trong lập trình là gì?</p>",
+                "choices": [
+                    {
+                        "id": 13,
+                        "question_id": 4,
+                        "content": "Một vùng nhớ cố định không thay đổi",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:27:19.000Z",
+                        "updatedAt": "2024-07-14T10:27:19.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 14,
+                        "question_id": 4,
+                        "content": "Một vùng nhớ dùng để lưu trữ dữ liệu và có thể thay đổi giá trị",
+                        "is_correct": true,
+                        "createdAt": "2024-07-14T10:27:19.000Z",
+                        "updatedAt": "2024-07-14T10:27:19.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 15,
+                        "question_id": 4,
+                        "content": "Một vùng nhớ chỉ đọc",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:27:19.000Z",
+                        "updatedAt": "2024-07-14T10:27:19.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 16,
+                        "question_id": 4,
+                        "content": "Một loại hàm đặc biệt",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:27:19.000Z",
+                        "updatedAt": "2024-07-14T10:27:19.000Z",
+                        "deletedAt": null
+                    }
+                ],
+                "difficulty": 1,
+                "chapter_id": 1,
+                "subject_id": 1,
+                "subject": "Nhập môn lập trình",
+                "chapter": "Biến và Hằng"
+            },
+            {
+                "id": 5,
+                "type_id": 2,
+                "content": "<p>Cấu trúc điều khiển (Control Structures) nào dưới đây là cấu trúc điều kiện?</p>",
+                "choices": [
+                    {
+                        "id": 17,
+                        "question_id": 5,
+                        "content": "for",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:28:35.000Z",
+                        "updatedAt": "2024-07-14T10:28:35.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 18,
+                        "question_id": 5,
+                        "content": "while",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:28:35.000Z",
+                        "updatedAt": "2024-07-14T10:28:35.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 19,
+                        "question_id": 5,
+                        "content": "if",
+                        "is_correct": true,
+                        "createdAt": "2024-07-14T10:28:35.000Z",
+                        "updatedAt": "2024-07-14T10:28:35.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 20,
+                        "question_id": 5,
+                        "content": "do-while",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:28:35.000Z",
+                        "updatedAt": "2024-07-14T10:28:35.000Z",
+                        "deletedAt": null
+                    }
+                ],
+                "difficulty": 1,
+                "chapter_id": 1,
+                "subject_id": 1,
+                "subject": "Nhập môn lập trình",
+                "chapter": "Biến và Hằng"
+            },
+            {
+                "id": 6,
+                "type_id": 2,
+                "content": "<p>Vòng lặp nào thường được sử dụng khi biết trước số lần lặp?</p>",
+                "choices": [
+                    {
+                        "id": 21,
+                        "question_id": 6,
+                        "content": "for",
+                        "is_correct": true,
+                        "createdAt": "2024-07-14T10:29:50.000Z",
+                        "updatedAt": "2024-07-14T10:29:50.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 22,
+                        "question_id": 6,
+                        "content": "while",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:29:50.000Z",
+                        "updatedAt": "2024-07-14T10:29:50.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 23,
+                        "question_id": 6,
+                        "content": "do-while",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:29:50.000Z",
+                        "updatedAt": "2024-07-14T10:29:50.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 24,
+                        "question_id": 6,
+                        "content": "if",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:29:50.000Z",
+                        "updatedAt": "2024-07-14T10:29:50.000Z",
+                        "deletedAt": null
+                    }
+                ],
+                "difficulty": 1,
+                "chapter_id": 1,
+                "subject_id": 1,
+                "subject": "Nhập môn lập trình",
+                "chapter": "Biến và Hằng"
+            },
+            {
+                "id": 7,
+                "type_id": 2,
+                "content": "<p>Lập trình song song (Parallel Programming) là gì?</p>",
+                "choices": [
+                    {
+                        "id": 25,
+                        "question_id": 7,
+                        "content": "Phương pháp lập trình để thực hiện nhiều tác vụ đồng thời",
+                        "is_correct": true,
+                        "createdAt": "2024-07-14T10:31:07.000Z",
+                        "updatedAt": "2024-07-14T10:31:07.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 26,
+                        "question_id": 7,
+                        "content": "Phương pháp lập trình để xử lý dữ liệu tuần tự",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:31:07.000Z",
+                        "updatedAt": "2024-07-14T10:31:07.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 27,
+                        "question_id": 7,
+                        "content": "Phương pháp lập trình để tạo ra hình ảnh",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:31:07.000Z",
+                        "updatedAt": "2024-07-14T10:31:07.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 28,
+                        "question_id": 7,
+                        "content": "Phương pháp lập trình để sửa lỗi phần cứng",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:31:07.000Z",
+                        "updatedAt": "2024-07-14T10:31:07.000Z",
+                        "deletedAt": null
+                    }
+                ],
+                "difficulty": 1,
+                "chapter_id": 1,
+                "subject_id": 1,
+                "subject": "Nhập môn lập trình",
+                "chapter": "Biến và Hằng"
+            },
+            {
+                "id": 8,
+                "type_id": 2,
+                "content": "<p>Trong lập trình hướng đối tượng (OOP), lớp (Class) là gì?</p>",
+                "choices": [
+                    {
+                        "id": 29,
+                        "question_id": 8,
+                        "content": "Một đối tượng cụ thể",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:33:51.000Z",
+                        "updatedAt": "2024-07-14T10:33:51.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 30,
+                        "question_id": 8,
+                        "content": "Một khuôn mẫu để tạo ra các đối tượng",
+                        "is_correct": true,
+                        "createdAt": "2024-07-14T10:33:51.000Z",
+                        "updatedAt": "2024-07-14T10:33:51.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 31,
+                        "question_id": 8,
+                        "content": "Một biến toàn cục",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:33:51.000Z",
+                        "updatedAt": "2024-07-14T10:33:51.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 32,
+                        "question_id": 8,
+                        "content": "Một cấu trúc điều khiển",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:33:51.000Z",
+                        "updatedAt": "2024-07-14T10:33:51.000Z",
+                        "deletedAt": null
+                    }
+                ],
+                "difficulty": 1,
+                "chapter_id": 1,
+                "subject_id": 1,
+                "subject": "Nhập môn lập trình",
+                "chapter": "Biến và Hằng"
+            },
+            {
+                "id": 9,
+                "type_id": 2,
+                "content": "<p>Mảng (Array) là gì?</p>",
+                "choices": [
+                    {
+                        "id": 33,
+                        "question_id": 9,
+                        "content": "Một cấu trúc dữ liệu lưu trữ nhiều giá trị có cùng kiểu dữ liệu",
+                        "is_correct": true,
+                        "createdAt": "2024-07-14T10:35:43.000Z",
+                        "updatedAt": "2024-07-14T10:35:43.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 34,
+                        "question_id": 9,
+                        "content": "Một loại hàm đặc biệt",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:35:43.000Z",
+                        "updatedAt": "2024-07-14T10:35:43.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 35,
+                        "question_id": 9,
+                        "content": "Một biến chứa nhiều loại dữ liệu",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:35:43.000Z",
+                        "updatedAt": "2024-07-14T10:35:43.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 36,
+                        "question_id": 9,
+                        "content": "Một cấu trúc điều khiển",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:35:43.000Z",
+                        "updatedAt": "2024-07-14T10:35:43.000Z",
+                        "deletedAt": null
+                    }
+                ],
+                "difficulty": 1,
+                "chapter_id": 1,
+                "subject_id": 1,
+                "subject": "Nhập môn lập trình",
+                "chapter": "Biến và Hằng"
+            },
+            {
+                "id": 10,
+                "type_id": 2,
+                "content": "<p>Lỗi biên dịch (Compile-time error) xảy ra khi nào?</p>",
+                "choices": [
+                    {
+                        "id": 37,
+                        "question_id": 10,
+                        "content": "Khi biên dịch mã nguồn sang mã máy",
+                        "is_correct": true,
+                        "createdAt": "2024-07-14T10:36:55.000Z",
+                        "updatedAt": "2024-07-14T10:36:55.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 38,
+                        "question_id": 10,
+                        "content": "Khi chương trình đang chạy",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:36:55.000Z",
+                        "updatedAt": "2024-07-14T10:36:55.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 39,
+                        "question_id": 10,
+                        "content": "Khi nhập dữ liệu sai",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:36:55.000Z",
+                        "updatedAt": "2024-07-14T10:36:55.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 40,
+                        "question_id": 10,
+                        "content": "Khi xuất kết quả sai",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:36:55.000Z",
+                        "updatedAt": "2024-07-14T10:36:55.000Z",
+                        "deletedAt": null
+                    }
+                ],
+                "difficulty": 1,
+                "chapter_id": 1,
+                "subject_id": 1,
+                "subject": "Nhập môn lập trình",
+                "chapter": "Biến và Hằng"
+            },
+            {
+                "id": 11,
+                "type_id": 2,
+                "content": "<p>Khai báo biến kiểu int trong c++?</p>",
+                "choices": [
+                    {
+                        "id": 41,
+                        "question_id": 11,
+                        "content": "int a;",
+                        "is_correct": true,
+                        "createdAt": "2024-07-14T10:37:59.000Z",
+                        "updatedAt": "2024-07-14T10:37:59.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 42,
+                        "question_id": 11,
+                        "content": "float c;",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:37:59.000Z",
+                        "updatedAt": "2024-07-14T10:37:59.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 43,
+                        "question_id": 11,
+                        "content": "double b;",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:37:59.000Z",
+                        "updatedAt": "2024-07-14T10:37:59.000Z",
+                        "deletedAt": null
+                    },
+                    {
+                        "id": 44,
+                        "question_id": 11,
+                        "content": "char d;",
+                        "is_correct": false,
+                        "createdAt": "2024-07-14T10:37:59.000Z",
+                        "updatedAt": "2024-07-14T10:37:59.000Z",
+                        "deletedAt": null
+                    }
+                ],
+                "difficulty": 1,
+                "chapter_id": 1,
+                "subject_id": 1,
+                "subject": "Nhập môn lập trình",
+                "chapter": "Biến và Hằng"
+            }
+        ]
+    }

@@ -92,7 +92,7 @@ let getList = async (req, res) => {
 
 let getListFromWinForm = async (req, res) => {
   try {
-    let idUser = req.body.id;
+    let idUser = req.params.userId;
     const exams = await Exam.findAll({
       where: {
         [Op.or]: [{ authorId: idUser }, { shared: 1 }],
