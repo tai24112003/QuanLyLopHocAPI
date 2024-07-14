@@ -1,42 +1,7 @@
 const ClassStudent = require('../models/class_student'); // Import your SessionComputer model
 const Student = require('../models/student')
+const SessionComputer = require('../models/session_computer')
 
-// Endpoint to insert session computers
-insert = async (req, res) => {
-    try {
-        const sessionComputers = req.body; // Assuming req.body is an array of session computer objects
-        console.log(sessionComputers);
-        // Insert the session computers into the database
-        sessionComputers.forEach(async element => {
-            await SessionComputer.create({
-                SessionID: element["SessionID"],
-                ComputerID: element["ComputerID"],
-                RAM: element["RAM"],
-                HDD: element["HHD"],
-                CPU: element["CPU"],
-                MouseConnected: element["MouseConnected"],
-                KeyboardConnected: element["KeyboardConnected"],
-                MonitorConnected: element["MonitorConnected"],
-                StudentID: element["StudentID"]
-            });
-
-        });
-
-        // Return success response
-        return res.status(201).json({
-            status: 'success',
-        });
-    } catch (error) {
-        console.error('Error inserting session computers:', error);
-        return res.status(500).json({
-            status: 'error',
-            message: 'Failed to insert session computers',
-            error: error.message,
-        });
-    }
-};
-
-// Endpoint to insert session computers
 insert = async (req, res) => {
     try {
         const Students = req.body; // Assuming req.body is an array of session computer objects
@@ -47,22 +12,18 @@ insert = async (req, res) => {
                 ClassID: element["ClassID"],
 
             });
-            ``
-        });
 
-        // Return success response
-        return res.status(201).json({
-            status: 'success',
         });
-    } catch (error) {
-        console.error('Error inserting session computers:', error);
+    } catch (e) {
+        console.error('Error fetching all classes:', error);
         return res.status(500).json({
             status: 'error',
-            message: 'Failed to insert session computers',
+            message: 'Failed to fetch all classes',
             error: error.message,
         });
     }
-};
+}
+
 let getAllClasseStudent = async (req, res) => {
     try {
         const allClasses = await ClassStudent.findAll();

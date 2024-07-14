@@ -24,7 +24,7 @@ const answer = require("./submisstion");
 const authenticateToken = require("../midlewares/verifyToken");
 
 function setRoute(server) {
-  server.use("/api/user", authenticateToken, user);
+  server.use("/api/user", user);
 
   server.use("/api/subject", authenticateToken, subject);
 

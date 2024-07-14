@@ -4,6 +4,6 @@ const Student = require('../controllers/StudentController');
 
 let router = express.Router();
 
-router.post('/insert', Student.insert);
+router.post('/', Student.insert);
 
 module.exports = router;

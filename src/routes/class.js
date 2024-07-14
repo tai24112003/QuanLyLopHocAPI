@@ -5,7 +5,7 @@ const authenticateToken = require("../midlewares/verifyToken");
 
 let router = express.Router();
 
-router.post("/insert", Class.insert);
+router.post("/", Class.insert);
 router.get("/", Class.getAllClasses);
 router.get("/userID", authenticateToken, Class.getClassesByUserId);
 

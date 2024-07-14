@@ -38,7 +38,7 @@ let insert = async (req, res) => {
       Session,
       StartTime: startTimeInVietnamTimeZone,
       EndTime: endTimeInVietnamTimeZone,
-      id,
+      userId: id,
       RoomID,
     });
 

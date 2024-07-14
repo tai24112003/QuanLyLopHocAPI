@@ -1,15 +1,16 @@
 const express = require("express");
 
 const UserController = require("../controllers/UserController");
+const authenticateToken = require("../midlewares/verifyToken");
 
 let router = express.Router();
 
 router.get("/getUserCanTeach", UserController.getUserCanTeach);
-router.get("/all", UserController.getAllUser);
-router.get("/:role", UserController.getUsersByRole);
-router.get("/", UserController.getUser);
-router.post("/", UserController.addUser);
-router.put("/lock/:id", UserController.toggleUserStatus);
-router.put("/:id", UserController.updateUser);
+router.get("/all", authenticateToken, UserController.getAllUser);
+router.get("/:role", authenticateToken, UserController.getUsersByRole);
+router.get("/", authenticateToken, UserController.getUser);
+router.post("/", authenticateToken, UserController.addUser);
+router.put("/lock/:id", authenticateToken, UserController.toggleUserStatus);
+router.put("/:id", authenticateToken, UserController.updateUser);
 
 module.exports = router;
