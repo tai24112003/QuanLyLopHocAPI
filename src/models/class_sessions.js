@@ -21,7 +21,7 @@ const ClassSession = sequelize.define(
   }
 );
 
-ClassSession.belongsTo(User, { foreignKey: "id" });
+ClassSession.belongsTo(User, { foreignKey: "userId" });
 ClassSession.belongsTo(Room, { foreignKey: "RoomID" });
 ClassSession.belongsTo(Class, { foreignKey: "ClassID" });
 
