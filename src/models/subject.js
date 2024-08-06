@@ -14,6 +14,8 @@ const Subject = sequelize.define(
   },
   {
     timestamps: false,
+    paranoid: true,
+    deletedAt: "deletedAt",
   }
 );
 
