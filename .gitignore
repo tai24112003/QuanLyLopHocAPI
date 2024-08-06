@@ -24,4 +24,5 @@ build/
 .DS_Store
 Thumbs.db
 
-
+#Public/images
+src/public/
