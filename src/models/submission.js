@@ -15,7 +15,7 @@ const Answer = sequelize.define(
             allowNull: false
         },
 
-        AmountCorrect: {
+        Score: {
             type: DataTypes.INTEGER,
             allowNull: false
         },

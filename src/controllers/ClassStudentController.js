@@ -14,6 +14,10 @@ insert = async (req, res) => {
             });
 
         });
+        return res.status(200).json({
+            status: 'success',
+            message: 'Success to fetch all classes',
+        });
     } catch (e) {
         console.error('Error fetching all classes:', error);
         return res.status(500).json({
@@ -47,7 +51,6 @@ let getAllClasseStudent = async (req, res) => {
 let getStudentsByClassID = async (req, res) => {
     try {
         const { ClassID } = req.params;
-        console.log(ClassID);
         // Find class by ClassID and include students
         const classWithStudents = await ClassStudent.findAll({
             where: { ClassID },

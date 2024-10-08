@@ -21,6 +21,7 @@ const auth = require("./auth");
 const Choice = require("./choice");
 const commonContent = require("./common_content");
 const answer = require("./submisstion");
+const session = require("./session");
 const authenticateToken = require("../midlewares/verifyToken");
 
 function setRoute(server) {
@@ -49,6 +50,8 @@ function setRoute(server) {
   server.use("/api/upload", authenticateToken, asset);
 
   server.use("/api/class", Class);
+
+  server.use("/api/session", session);
 
   server.use("/api/student", student);
 

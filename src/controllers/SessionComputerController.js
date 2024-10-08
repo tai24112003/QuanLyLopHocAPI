@@ -15,7 +15,7 @@ insert = async (req, res) => {
                 SessionID: element["SessionID"],
                 ComputerID: element["ComputerID"],
                 RAM: element["RAM"],
-                HDD: element["HD`D"],
+                HDD: element["HDD"],
                 CPU: element["CPU"],
                 MouseConnected: element["MouseConnected"],
                 KeyboardConnected: element["KeyboardConnected"],

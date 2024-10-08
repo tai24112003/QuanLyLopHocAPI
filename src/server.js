@@ -3,7 +3,7 @@ const cors = require("cors");
 
 const db = require("./configs/database");
 const setRouter = require("./routes/index");
-const { createRecordsDefault } = require("./configs/createRecordsDefault");
+// const { createRecordsDefault } = require("./configs/createRecordsDefault");
 
 const server = express();
 const port = 9999;
@@ -11,7 +11,7 @@ global.__basedir = __dirname;
 
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
-server.use(cors()); 
+server.use(cors());
 server.use("/static", express.static("./src/public"));
 
 setRouter(server);
