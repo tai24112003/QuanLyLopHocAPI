@@ -35,7 +35,7 @@ module.exports = {
       { email: 'tranthean@caothang.edu.vn', name: 'Trần Thế An', phone: '2884027554', password: '123456', role: 'GV' },
       { email: 'dqvinh@caothang.edu.vn', name: 'Đặng Quang Vinh', phone: '3230535079', password: '123456', role: 'GV' },
       { email: 'tranminhthanh@caothang.edu.vn', name: 'Trần Minh Thành', phone: '9694106526', password: '123456', role: 'GV' },
-      { email: '', name: 'Võ Thị Vân Anh', phone: '2169475664', password: '123456', role: 'GV' }
+      { email: 'vtvanh@caothang.edu.vn', name: 'Võ Thị Vân Anh', phone: '2169475664', password: '123456', role: 'GV' }
     ];
 
     for (const user of users) {

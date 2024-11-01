@@ -1,4 +1,5 @@
 const Classes = require("../models/class");
+const { Op } = require("sequelize"); // Đảm bảo đã import Op từ sequelize
 const { sendSuccessResponse } = require("../ultis/response");
 let insert = async (req, res) => {
   try {
@@ -16,6 +17,8 @@ let insert = async (req, res) => {
       });
     }
     console.log(ClassName);
+    console.log(LastTime);
+    console.log(UserID);
     // Nếu ClassName chưa tồn tại, thêm mới vào bảng Classes
     const newClass = await Classes.create({
       ClassName,
@@ -90,5 +93,31 @@ let getClassesByUserId = async (req, res) => {
     });
   }
 };
+const getClasssByDateRange = async (req, res, next) => {
+  const { startDate, endDate } = req.query;
 
-module.exports = { insert, getAllClasses, getClassesByUserId };
+  try {
+    let lstClass = await Classes.findAll({
+      where: {
+        LastTime: {
+          [Op.gte]: new Date(startDate),  
+          [Op.lte]: new Date(endDate)     
+        }
+      }
+    });
+
+    return res.status(200).json({
+      status: "success",
+      data: lstClass
+    });
+  } catch (error) {
+    console.error("Error fetching Classs by date range:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Failed to fetch Classs by date range",
+      error: error.message
+    });
+  }
+};
+
+module.exports = { insert, getAllClasses, getClassesByUserId, getClasssByDateRange };

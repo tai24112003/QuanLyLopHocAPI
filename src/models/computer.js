@@ -31,6 +31,8 @@ const Computer = sequelize.define(
     CPU: {
       type: DataTypes.STRING,
     },
+    LastTime: { type: DataTypes.STRING, allowNull: false },
+
   },
   {
     timestamps: false,

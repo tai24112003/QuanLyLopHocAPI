@@ -1,5 +1,5 @@
 const Student = require('../models/student'); // Import your SessionComputer model
-
+const { Op } = require("sequelize"); 
 // Endpoint to insert students
 insert = async (req, res) => {
     try {
@@ -41,8 +41,35 @@ insert = async (req, res) => {
         });
     }
 };
+const getStudentsByTimeRange = async (req, res) => {
+    try {
+        const { startTime, endTime } = req.query; // Retrieve start and end times from query parameters
 
+        // Fetch students within the specified time range
+        const students = await Student.findAll({
+            where: {
+                LastTime: {
+                    [Op.between]: [new Date(startTime), new Date(endTime)]
+                }
+            }
+        });
+
+        // Return success response with the list of students
+        return res.status(200).json({
+            status: 'success',
+            data: students
+        });
+    } catch (error) {
+        console.error('Error fetching students by time range:', error);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Failed to fetch students by time range',
+            error: error.message,
+        });
+    }
+};
 
 module.exports = {
     insert,
+    getStudentsByTimeRange
 };

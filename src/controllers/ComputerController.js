@@ -3,6 +3,7 @@ const Computer = require("../models/computer");
 const ClassSession = require("../models/class_sessions");
 const Session_Computer = require("../models/session_computer");
 const { sendSuccessResponse } = require("../ultis/response");
+const { Op } = require("sequelize"); // Đảm bảo đã import Op từ sequelize
 // Lấy danh sách máy theo RoomID
 const getComputerByRoomID = async (req, res, next) => {
   const { RoomID } = req.params;
@@ -21,10 +22,36 @@ const getComputerByRoomID = async (req, res, next) => {
     });
   }
 };
+const getComputersByDateRange = async (req, res, next) => {
+  const { startDate, endDate } = req.query;
 
+  try {
+    // Tìm máy tính theo khoảng thời gian
+    let computers = await Computer.findAll({
+      where: {
+        LastTime: {
+          [Op.gte]: new Date(startDate),  // Lớn hơn hoặc bằng startDate
+          [Op.lte]: new Date(endDate)     // Nhỏ hơn hoặc bằng endDate
+        }
+      }
+    });
+
+    return res.status(200).json({
+      status: "success",
+      data: computers
+    });
+  } catch (error) {
+    console.error("Error fetching computers by date range:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Failed to fetch computers by date range",
+      error: error.message
+    });
+  }
+};
 // Thêm máy tính
 const addComputer = async (req, res) => {
-  const { RoomID, ComputerName, RAM, HDD, CPU } = req.body;
+  const { RoomID, ComputerName, RAM, HDD, CPU, LastTime } = req.body;
 
   try {
     // Thêm máy tính mới
@@ -34,6 +61,7 @@ const addComputer = async (req, res) => {
       RAM,
       HDD,
       CPU,
+      LastTime
     });
 
     // Tăng số lượng máy trong phòng
@@ -123,4 +151,5 @@ module.exports = {
   addComputer,
   deleteComputer,
   updateComputer,
+  getComputersByDateRange
 };
