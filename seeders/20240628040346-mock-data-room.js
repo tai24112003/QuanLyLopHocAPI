@@ -18,9 +18,9 @@ module.exports = {
         {
           RoomName: "F71",
           NumberOfComputers: 50,
-          StandardRAM: "16gb",
-          StandardHDD: "512gb",
-          StandardCPU: "I5",
+          StandardRAM: "Capacity: 8 GB, Manufacturer: Micron Technology",
+          StandardHDD: "Model: INTEL SSDPEKNU512GZ Interface: SCSI Size: 476 GB",
+          StandardCPU: "AMD Ryzen 7 4800H with Radeon Graphics",
           Status: "Trống",
         },
         // Thêm nhiều người dùng khác nếu cần

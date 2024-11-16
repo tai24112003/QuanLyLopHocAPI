@@ -6,13 +6,12 @@ const { sequelize } = require("../configs/database");
 const Session = sequelize.define(
   "Session",
   {
-    SessionID: { type: DataTypes.INTEGER, allowNull: false },
     StartTime: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     EndTime: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: true,
       },
   },

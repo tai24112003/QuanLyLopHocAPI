@@ -51,11 +51,12 @@ const Session_Computer = sequelize.define(
       type: DataTypes.BOOLEAN,
     },
     MismatchInfo: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
     },
-    RepairNote: {
-      type: DataTypes.TEXT,
-    },
+    maintenanceTime:{
+      type: DataTypes.STRING
+    }
+   
   },
   {
     tableName: "Session_Computer",
@@ -68,5 +69,6 @@ const Session_Computer = sequelize.define(
   }
 );
 Session_Computer.belongsTo(Student, { foreignKey: "StudentID" });
+Session_Computer.belongsTo(Computers, { foreignKey: "ComputerID" });
 
 module.exports = Session_Computer;

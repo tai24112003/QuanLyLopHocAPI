@@ -1,6 +1,8 @@
 const Classes = require("../models/class");
-const { Op } = require("sequelize"); // Đảm bảo đã import Op từ sequelize
+const { Op, Sequelize } = require("sequelize");
 const { sendSuccessResponse } = require("../ultis/response");
+const Setting = require("../models/setting"); // Điều chỉnh đường dẫn nếu cần
+
 let insert = async (req, res) => {
   try {
     const { ClassName, LastTime, UserID } = req.body;
@@ -16,9 +18,7 @@ let insert = async (req, res) => {
         ClassID: existingClass.ClassID,
       });
     }
-    console.log(ClassName);
-    console.log(LastTime);
-    console.log(UserID);
+
     // Nếu ClassName chưa tồn tại, thêm mới vào bảng Classes
     const newClass = await Classes.create({
       ClassName,
@@ -26,6 +26,12 @@ let insert = async (req, res) => {
       UserID,
       Status: 1,
     });
+
+    // Sau khi thêm lớp học thành công, cập nhật lastTimeUpdateClass trong bảng setting
+    await Setting.update(
+      { lastTimeUpdateClass: LastTime },
+      { where: { ID: 1 } } // Điều chỉnh ID cho phù hợp nếu cần
+    );
 
     // Trả về phản hồi thành công với ClassID
     return res.status(201).json({
@@ -43,6 +49,7 @@ let insert = async (req, res) => {
     });
   }
 };
+
 
 // Function to get all classes
 let getAllClasses = async (req, res) => {
@@ -93,31 +100,38 @@ let getClassesByUserId = async (req, res) => {
     });
   }
 };
-const getClasssByDateRange = async (req, res, next) => {
-  const { startDate, endDate } = req.query;
+const getClassByDateRange = async (req, res, next) => {
+  const { startTime, endTime } = req.query;
 
   try {
-    let lstClass = await Classes.findAll({
+    const lstClass = await Classes.findAll({
       where: {
         LastTime: {
-          [Op.gte]: new Date(startDate),  
-          [Op.lte]: new Date(endDate)     
-        }
-      }
+          [Op.and]: [
+            Sequelize.where(
+              Sequelize.fn('STR_TO_DATE', Sequelize.col('LastTime'), '%d/%m/%Y %H:%i:%s'),
+              {
+                [Op.gte]: new Date(startTime),
+                [Op.lte]: new Date(endTime)
+              }
+            )
+          ]
+        },
+      },
     });
 
     return res.status(200).json({
       status: "success",
-      data: lstClass
+      data: lstClass,
     });
   } catch (error) {
-    console.error("Error fetching Classs by date range:", error);
+    console.error("Error fetching Classes by date range:", error);
     return res.status(500).json({
       status: "error",
-      message: "Failed to fetch Classs by date range",
-      error: error.message
+      message: "Failed to fetch Classes by date range",
+      error: error.message,
     });
   }
 };
 
-module.exports = { insert, getAllClasses, getClassesByUserId, getClasssByDateRange };
+module.exports = { insert, getAllClasses, getClassesByUserId, getClassByDateRange };

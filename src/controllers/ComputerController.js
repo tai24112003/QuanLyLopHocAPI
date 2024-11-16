@@ -1,6 +1,7 @@
 const Room = require("../models/room");
 const Computer = require("../models/computer");
 const ClassSession = require("../models/class_sessions");
+const Setting = require("../models/setting"); // Import model Setting
 const Session_Computer = require("../models/session_computer");
 const { sendSuccessResponse } = require("../ultis/response");
 const { Op } = require("sequelize"); // Đảm bảo đã import Op từ sequelize
@@ -30,8 +31,8 @@ const getComputersByDateRange = async (req, res, next) => {
     let computers = await Computer.findAll({
       where: {
         LastTime: {
-          [Op.gte]: new Date(startDate),  // Lớn hơn hoặc bằng startDate
-          [Op.lte]: new Date(endDate)     // Nhỏ hơn hoặc bằng endDate
+          [Op.gte]: new Date(startDate),  
+          [Op.lte]: new Date(endDate)     
         }
       }
     });
@@ -70,6 +71,12 @@ const addComputer = async (req, res) => {
       where: { RoomID: RoomID },
     });
 
+    // Cập nhật lastTimeUpdateComputer trong bảng setting
+    await Setting.update(
+      { lastTimeUpdateComputer: new Date().toISOString() },
+      { where: { ID: 1 } } // Điều chỉnh ID nếu cần
+    );
+
     return sendSuccessResponse(res, newComputer);
   } catch (error) {
     console.error("Error adding computer:", error);
@@ -80,7 +87,6 @@ const addComputer = async (req, res) => {
     });
   }
 };
-
 // Xóa máy tính
 const deleteComputer = async (req, res) => {
   const { RoomID, ComputerID } = req.body;
@@ -108,6 +114,12 @@ const deleteComputer = async (req, res) => {
       where: { RoomID: RoomID },
     });
 
+    // Cập nhật lastTimeUpdateComputer trong bảng setting
+    await Setting.update(
+      { lastTimeUpdateComputer: new Date().toISOString() },
+      { where: { ID: 1 } } // Điều chỉnh ID nếu cần
+    );
+
     return res.status(200).json({
       status: "success",
       message: "Computer deleted successfully",
@@ -131,6 +143,12 @@ const updateComputer = async (req, res) => {
     await Computer.update(updatedComputer, {
       where: { RoomID: RoomID, ComputerName: ComputerName },
     });
+
+    // Cập nhật lastTimeUpdateComputer trong bảng setting
+    await Setting.update(
+      { lastTimeUpdateComputer: new Date().toISOString() },
+      { where: { ID: 1 } } // Điều chỉnh ID nếu cần
+    );
 
     return res.status(200).json({
       status: "success",

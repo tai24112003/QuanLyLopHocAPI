@@ -1,10 +1,14 @@
 const Student = require('../models/student'); // Import your SessionComputer model
-const { Op } = require("sequelize"); 
+const { Op, Sequelize } = require("sequelize");
 // Endpoint to insert students
-insert = async (req, res) => {
+const Setting = require("../models/setting"); // Điều chỉnh đường dẫn nếu cần
+
+const insert = async (req, res) => {
     try {
-        const students = req.body; // Assuming req.body is an array of student objects
-        // Insert or update the students into the database
+        const students = req.body; // Giả sử req.body là một mảng các đối tượng sinh viên
+        let latestTime = null; // Biến để lưu trữ LastTime mới nhất
+
+        // Duyệt qua từng sinh viên và chèn hoặc cập nhật thông tin vào cơ sở dữ liệu
         for (const student of students) {
             const existingStudent = await Student.findOne({ where: { StudentID: student.StudentID } });
 
@@ -14,7 +18,6 @@ insert = async (req, res) => {
                     FirstName: student.FirstName,
                     LastName: student.LastName,
                     LastTime: student.LastTime
-
                 });
             } else {
                 // Nếu StudentID chưa tồn tại, thêm mới vào bảng Student
@@ -25,9 +28,22 @@ insert = async (req, res) => {
                     LastTime: student.LastTime
                 });
             }
+
+            // Cập nhật latestTime nếu LastTime của sinh viên hiện tại mới hơn
+            if (!latestTime || new Date(student.LastTime) > new Date(latestTime)) {
+                latestTime = student.LastTime;
+            }
         }
 
-        // Return success response
+        // Nếu latestTime được cập nhật, cập nhật lastTimeUpdateStudent trong bảng setting
+        if (latestTime) {
+            await Setting.update(
+                { lastTimeUpdateStudent: latestTime },
+                { where: { ID: 1 } } // Điều chỉnh ID phù hợp nếu cần
+            );
+        }
+
+        // Trả về phản hồi thành công với danh sách sinh viên
         return res.status(201).json({
             status: 'success',
             data: students
@@ -41,17 +57,20 @@ insert = async (req, res) => {
         });
     }
 };
+
+
 const getStudentsByTimeRange = async (req, res) => {
     try {
-        const { startTime, endTime } = req.query; // Retrieve start and end times from query parameters
+        const { startTime, endTime } = req.query;
 
         // Fetch students within the specified time range
         const students = await Student.findAll({
-            where: {
-                LastTime: {
+            where: Sequelize.where(
+                Sequelize.fn('STR_TO_DATE', Sequelize.col('LastTime'), '%d/%m/%Y %H:%i:%s'),
+                {
                     [Op.between]: [new Date(startTime), new Date(endTime)]
                 }
-            }
+            )
         });
 
         // Return success response with the list of students

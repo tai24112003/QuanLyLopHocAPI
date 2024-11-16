@@ -3,42 +3,42 @@ const moment = require("moment-timezone");
 
 let insert = async (req, res) => {
   try {
-    const { ClassID, Session, StartTime, EndTime, id, RoomID } = req.body;
+    const { ClassID, Session, StartTime, EndTime, user_id, RoomID } = req.body;
+    
+    // Chuyển đổi StartTime sang định dạng chỉ chứa ngày (dd/MM/yyyy)
+    const startDate = new Date(StartTime);
+    const startDay = startDate.toLocaleDateString("en-GB"); // Chuyển thành định dạng dd/MM/yyyy
 
-    // Chuyển đổi múi giờ của StartTime và EndTime sang múi giờ Việt Nam
-    const startTimeInVietnamTimeZone = moment
-      .tz(StartTime, "UTC")
-      .tz("Asia/Ho_Chi_Minh")
-      .format();
-    const endTimeInVietnamTimeZone = moment
-      .tz(EndTime, "UTC")
-      .tz("Asia/Ho_Chi_Minh")
-      .format();
-
-    // Kiểm tra xem ClassSession có tồn tại với ClassID, RoomID và Session
+    // Kiểm tra xem ClassSession có tồn tại với ClassID, Session và StartTime (chỉ so sánh ngày)
     const existingClassSession = await ClassSession.findOne({
       where: {
         ClassID,
-        RoomID,
         Session,
       },
     });
 
     if (existingClassSession) {
-      return res.status(200).json({
-        status: "success",
-        SessionID: existingClassSession.SessionID,
-        message: "ClassSession already exists",
-      });
+      // Lấy ngày từ StartTime của buổi học đã tồn tại
+      const existingStartDate = new Date(existingClassSession.StartTime);
+      const existingStartDay = existingStartDate.toLocaleDateString("en-GB");
+
+      // So sánh phần ngày (dd/MM/yyyy) của StartTime
+      if (existingStartDay === startDay) {
+        return res.status(200).json({
+          status: "success",
+          SessionID: existingClassSession.SessionID,
+          message: "ClassSession already exists on the same day",
+        });
+      }
     }
 
-    // Tạo ClassSession mới
+    // Tạo ClassSession mới nếu không có trùng lặp
     const newClassSession = await ClassSession.create({
       ClassID,
       Session,
-      StartTime: startTimeInVietnamTimeZone,
-      EndTime: endTimeInVietnamTimeZone,
-      userId: id,
+      StartTime,
+      EndTime,
+      userId: user_id,
       RoomID,
     });
 
@@ -57,6 +57,7 @@ let insert = async (req, res) => {
     });
   }
 };
+
 
 let getClassSessionByClassID = async (req, res) => {
   try {
@@ -88,5 +89,8 @@ let getClassSessionByClassID = async (req, res) => {
     });
   }
 };
+
+
+
 
 module.exports = { insert, getClassSessionByClassID };

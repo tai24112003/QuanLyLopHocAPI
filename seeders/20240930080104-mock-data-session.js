@@ -15,19 +15,16 @@ module.exports = {
    
     return queryInterface.bulkInsert('Sessions', [
       {
-        SessionID: 1,
-        StartTime: new Date('2024-09-01 08:00:00'),
-        EndTime: new Date('2024-09-01 10:00:00')
+        StartTime: '08:00',
+        EndTime: '10:00'
       },
       {
-        SessionID: 2,
-        StartTime: new Date('2024-09-02 09:00:00'),
-        EndTime: new Date('2024-09-02 11:00:00')
+        StartTime: '09:00',
+        EndTime: '11:00'
       },
       {
-        SessionID: 3,
-        StartTime: new Date('2024-09-03 14:00:00'),
-        EndTime: new Date('2024-09-03 16:00:00')
+        StartTime: ('14:00'),
+        EndTime: ('16:00')
       }
     ], {});
   },

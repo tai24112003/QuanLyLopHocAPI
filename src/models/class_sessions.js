@@ -13,8 +13,8 @@ const ClassSession = sequelize.define(
       autoIncrement: true,
     },
     Session: { type: DataTypes.INTEGER },
-    StartTime: { type: DataTypes.DATE },
-    EndTime: { type: DataTypes.DATE },
+    StartTime: { type: DataTypes.STRING },
+    EndTime: { type: DataTypes.STRING },
   },
   {
     timestamps: false,

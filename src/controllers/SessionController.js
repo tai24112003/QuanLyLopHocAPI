@@ -5,6 +5,8 @@ let getAll = async (req, res, next) => {
     return res.send({ data: sizes });
 }
 
+
 module.exports = {
     getAll,
+    
 };
