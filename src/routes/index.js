@@ -4,10 +4,7 @@ const adminRouter = require("./admin");
 const Class = require("./class");
 const class_student = require("./class_student");
 const student = require("./student");
-const subject = require("./subject");
-const chapter = require("./chapter");
 const user = require("./user");
-const question = require("./question");
 const setting = require("./setting");
 const computer = require("./computer");
 const class_sessions = require("./class_session");
@@ -15,27 +12,13 @@ const session_computer = require("./session_computer");
 const attendance = require("./attendance");
 const room = require("./room");
 const asset = require("./asset");
-const exam = require("./exam");
-const exam_winform = require("./exam_winform");
 const auth = require("./auth");
-const Choice = require("./choice");
-const commonContent = require("./common_content");
 const answer = require("./submisstion");
 const session = require("./session");
 const authenticateToken = require("../midlewares/verifyToken");
 
 function setRoute(server) {
   server.use("/api/user", user);
-
-  server.use("/api/subject", authenticateToken, subject);
-
-  server.use("/api/chapter", authenticateToken, chapter);
-
-  server.use("/api/question", authenticateToken, question);
-
-  server.use("/api/common-content", authenticateToken, commonContent);
-
-  server.use("/api/choice", authenticateToken, Choice);
 
   server.use("/api/setting", setting);
 
@@ -60,10 +43,6 @@ function setRoute(server) {
   server.use("/api/attendance", attendance);
 
   server.use("/api/submisstion", answer);
-
-  server.use("/api/exam", authenticateToken, exam);
-
-  server.use("/api/public/exam", exam_winform);
 
   server.use("/api/auth", auth);
 }
