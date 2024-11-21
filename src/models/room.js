@@ -14,7 +14,7 @@ const Room = sequelize.define(
     Status: { type: DataTypes.STRING },
   },
   {
-    timestamps: true,
+    timestamps: false,
     paranoid: true,
     deletedAt: "deletedAt",
   }

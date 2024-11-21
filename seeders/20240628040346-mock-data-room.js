@@ -16,10 +16,11 @@ module.exports = {
       "rooms",
       [
         {
-          RoomName: "F71",
+          RoomName: "F710",
           NumberOfComputers: 50,
           StandardRAM: "Capacity: 8 GB, Manufacturer: Micron Technology",
-          StandardHDD: "Model: INTEL SSDPEKNU512GZ Interface: SCSI Size: 476 GB",
+          StandardHDD:
+            "Model: INTEL SSDPEKNU512GZ Interface: SCSI Size: 476 GB",
           StandardCPU: "AMD Ryzen 7 4800H with Radeon Graphics",
           Status: "Trống",
         },
