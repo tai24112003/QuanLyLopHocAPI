@@ -74,7 +74,6 @@ let getAttendanceByClassID = async (req, res) => {
           AttendanceID: attendance.AttendanceID,
           StudentID: attendance.Student ? attendance.Student.StudentID : null,
           Present: attendance.Present,
-          Remarks: attendance.Remarks,
           FirstName: attendance.Student ? attendance.Student.FirstName : null,
           LastName: attendance.Student ? attendance.Student.LastName : null,
           LastTime: attendance.Student ? attendance.Student.LastTime : null,

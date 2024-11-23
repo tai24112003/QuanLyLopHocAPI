@@ -7,7 +7,7 @@ let getRoomByID = async (req, res, next) => {
   let id = req.params.id;
   let Rooms = await Room.findAll({
     where: {
-      RoomName: id,
+      RoomID: id,
     },
   });
   return res.send({
