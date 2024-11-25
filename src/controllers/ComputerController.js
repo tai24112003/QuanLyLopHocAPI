@@ -23,6 +23,23 @@ const getComputerByRoomID = async (req, res, next) => {
     });
   }
 };
+
+const getComputerByID = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    let computers = await Computer.findByPk(id);
+    return sendSuccessResponse(res, computers);
+  } catch (error) {
+    console.error("Error fetching computers by RoomID:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Failed to fetch computers",
+      error: error.message,
+    });
+  }
+};
+
 const getComputersByDateRange = async (req, res, next) => {
   const { startDate, endDate } = req.query;
 
@@ -31,22 +48,22 @@ const getComputersByDateRange = async (req, res, next) => {
     let computers = await Computer.findAll({
       where: {
         LastTime: {
-          [Op.gte]: new Date(startDate),  
-          [Op.lte]: new Date(endDate)     
-        }
-      }
+          [Op.gte]: new Date(startDate),
+          [Op.lte]: new Date(endDate),
+        },
+      },
     });
 
     return res.status(200).json({
       status: "success",
-      data: computers
+      data: computers,
     });
   } catch (error) {
     console.error("Error fetching computers by date range:", error);
     return res.status(500).json({
       status: "error",
       message: "Failed to fetch computers by date range",
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -62,7 +79,7 @@ const addComputer = async (req, res) => {
       RAM,
       HDD,
       CPU,
-      LastTime
+      LastTime,
     });
 
     // Tăng số lượng máy trong phòng
@@ -136,24 +153,30 @@ const deleteComputer = async (req, res) => {
 
 // Sửa máy tính
 const updateComputer = async (req, res) => {
-  const { RoomID, ComputerName, ...updatedComputer } = req.body;
+  const { RoomID, ComputerName, ID, ...updatedComputer } = req.body;
+  console.log({ ComputerName: ComputerName, ...updatedComputer });
 
   try {
     // Cập nhật thông tin máy tính
-    await Computer.update(updatedComputer, {
-      where: { RoomID: RoomID, ComputerName: ComputerName },
-    });
+    if (ID) {
+      await Computer.update(updatedComputer, {
+        where: { ID: ID },
+      });
+    } else {
+      await Computer.update(
+        { ComputerName: ComputerName, ...updatedComputer },
+        {
+          where: { RoomID: RoomID, ComputerName: ComputerName },
+        }
+      );
+    }
 
     // Cập nhật lastTimeUpdateComputer trong bảng setting
     await Setting.update(
       { lastTimeUpdateComputer: new Date().toISOString() },
       { where: { ID: 1 } } // Điều chỉnh ID nếu cần
     );
-
-    return res.status(200).json({
-      status: "success",
-      message: "Computer updated successfully",
-    });
+    sendSuccessResponse(res, "Computer updated successfully");
   } catch (error) {
     console.error("Error updating computer:", error);
     return res.status(500).json({
@@ -169,5 +192,6 @@ module.exports = {
   addComputer,
   deleteComputer,
   updateComputer,
-  getComputersByDateRange
+  getComputersByDateRange,
+  getComputerByID,
 };

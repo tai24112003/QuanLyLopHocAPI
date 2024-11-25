@@ -71,13 +71,66 @@ const deleteByID = async (req, res) => {
 const getComputersWithMismatchInfo = async (req, res) => {
   try {
     const result = await SessionComputer.findAll({
-      where: { MismatchInfo: { [Op.ne]: null } },
-      include: [{ model: Computers, attributes: ["ComputerName"] }],
+      where: {
+        MismatchInfo: { [Op.ne]: "" }, // MismatchInfo khác null
+        maintenanceTime: null, // MaintainTime là null
+      },
+      include: [
+        {
+          model: Computers,
+          attributes: ["ComputerName"], // Lấy tên máy tính
+        },
+      ],
     });
     sendSuccessResponse(res, result);
   } catch (error) {
     console.error("Error fetching computers with mismatch info:", error);
     sendErrorResponse(res, "Failed to fetch computers with mismatch info", 500);
+  }
+};
+
+const getComputersWithMismatchInfoByComputerId = async (req, res) => {
+  const ComputerId = req.params.id; // Lấy ID từ URL
+  try {
+    const result = await SessionComputer.findAll({
+      where: {
+        MismatchInfo: { [Op.ne]: "" }, // MismatchInfo khác null
+        ComputerID: ComputerId,
+      },
+      include: [
+        {
+          model: Computers,
+          attributes: ["ComputerName"], // Lấy tên máy tính
+        },
+      ],
+    });
+    sendSuccessResponse(res, result);
+  } catch (error) {
+    console.error("Error fetching computers with mismatch info:", error);
+    sendErrorResponse(res, "Failed to fetch computers with mismatch info", 500);
+  }
+};
+
+const getSessionComputerById = async (req, res) => {
+  const sessionComputerId = req.params.id; // Lấy ID từ URL
+  try {
+    const result = await SessionComputer.findByPk(sessionComputerId, {
+      include: [
+        {
+          model: Computers,
+          attributes: ["ComputerName"], // Lấy thông tin máy tính
+        },
+      ],
+    });
+
+    if (result) {
+      sendSuccessResponse(res, result);
+    } else {
+      sendErrorResponse(res, "SessionComputer not found", 404);
+    }
+  } catch (error) {
+    console.error("Error fetching SessionComputer:", error);
+    sendErrorResponse(res, "Failed to fetch SessionComputer", 500);
   }
 };
 
@@ -109,10 +162,7 @@ const updateMaintenanceTime = async (req, res) => {
     );
 
     if (updated) {
-      return res.status(200).json({
-        status: "success",
-        message: "Maintenance time updated successfully",
-      });
+      sendSuccessResponse(res, "Maintenance time updated successfully");
     } else {
       return res
         .status(404)
@@ -132,4 +182,6 @@ module.exports = {
   getComputersWithMismatchInfo,
   getComputersWithMaintenanceTime,
   updateMaintenanceTime,
+  getSessionComputerById,
+  getComputersWithMismatchInfoByComputerId,
 };
