@@ -60,7 +60,7 @@ const Session_Computer = sequelize.define(
   },
   {
     tableName: "Session_Computer",
-    timestamps: false,
+    timestamps: true,
     createdAt: "createdAt",
     updatedAt: "updatedAt",
   },

@@ -121,45 +121,63 @@ let addUser = async (req, res, next) => {
 
 let updateUser = async (req, res, next) => {
   try {
-    let id = req.params.id;
-    let { email, name, phone, role, password } = req.body;
+    const loggedInUserId = req.user.id;
+    const targetUserId = req.params.id;
+    const { email, name, phone, role, password } = req.body;
 
-    let user = await User.findByPk(id);
+    if (
+      loggedInUserId !== targetUserId &&
+      !["TK", "PK", "admin"].includes(req.user.role)
+    ) {
+      return res.status(403).send({
+        status: "error",
+        message: "Bạn không có quyền thay đổi thông tin của người khác.",
+      });
+    }
+
+    // Tìm user trong database
+    let user = await User.findByPk(targetUserId);
 
     if (!user) {
       return res.status(404).send({
         status: "error",
-        message: "User not found",
+        message: "Không tìm thấy người dùng.",
       });
     }
 
+    // Kiểm tra nếu email đã tồn tại với một user khác
     if (email) {
       let existingUser = await User.findOne({ where: { email } });
-      if (existingUser && existingUser.id != id) {
-        console.log(id);
-        console.log(existingUser.id);
+      if (existingUser && existingUser.id != targetUserId) {
         return res.status(400).send({
           status: "error",
-          message: "Email already exists",
+          message: "Email đã được sử dụng bởi người dùng khác.",
         });
       }
     }
 
+    // Cập nhật thông tin user
     user.email = email || user.email;
     user.name = name || user.name;
     user.phone = phone || user.phone;
     user.role = role || user.role;
+
+    // Hash mật khẩu nếu có
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      user.password = hashedPassword; // Ensure this is hashed before saving
+      user.password = hashedPassword;
     }
 
+    // Lưu thay đổi
     await user.save();
 
+    // Trả về thông tin user (ẩn mật khẩu)
     user = user.toJSON();
     delete user.password;
+
     return sendSuccessResponse(res, user);
   } catch (e) {
+    console.error(e);
     return sendInternalErrorResponse(res);
   }
 };
