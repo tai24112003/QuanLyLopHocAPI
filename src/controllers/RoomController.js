@@ -3,6 +3,7 @@ const Computer = require("../models/computer");
 const ClassSession = require("../models/class_sessions");
 const { sendSuccessResponse } = require("../ultis/response");
 const { formattedDateTime } = require("../ultis/formatData");
+const { Op } = require("sequelize"); // Đảm bảo đã import Op từ sequelize
 
 let getRoomByID = async (req, res, next) => {
   let id = req.params.id;
@@ -20,12 +21,17 @@ let getRoomByName = async (req, res, next) => {
   let id = req.params.id;
   let Rooms = await Room.findAll({
     where: {
-        RoomName: id,
-        Status: {
-            [Op.ne]: "Xóa" // Khác "Xóa"
-        }
-    }
-});}
+      RoomName: id,
+      Status: {
+        [Op.ne]: "Xóa", // Khác "Xóa"
+      },
+    },
+  });
+  return res.send({
+    status: "success",
+    data: Rooms,
+  });
+};
 let getAllRoom = async (req, res, next) => {
   let Rooms = await Room.findAll();
   return res.send({
@@ -121,5 +127,5 @@ module.exports = {
   updateRoom,
   getRoomByID,
   getAllRoom,
-  getRoomByName
+  getRoomByName,
 };

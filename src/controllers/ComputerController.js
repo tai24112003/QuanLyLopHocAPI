@@ -153,14 +153,13 @@ const deleteComputer = async (req, res) => {
 
 // Sửa máy tính
 const updateComputer = async (req, res) => {
-  const { RoomID, ComputerName, ID, ...updatedComputer } = req.body;
-  console.log({ ComputerName: ComputerName, ...updatedComputer });
+  const { RoomID, ComputerName, ComputerID, ID, ...updatedComputer } = req.body;
 
   try {
     // Cập nhật thông tin máy tính
-    if (ID) {
+    if (ComputerID) {
       await Computer.update(updatedComputer, {
-        where: { ID: ID },
+        where: { ID: ComputerID },
       });
     } else {
       await Computer.update(
