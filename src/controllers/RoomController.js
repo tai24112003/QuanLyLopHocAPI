@@ -2,6 +2,7 @@ const Room = require("../models/room");
 const Computer = require("../models/computer");
 const ClassSession = require("../models/class_sessions");
 const { sendSuccessResponse } = require("../ultis/response");
+const { formattedDateTime } = require("../ultis/formatData");
 
 let getRoomByID = async (req, res, next) => {
   let id = req.params.id;
@@ -33,6 +34,7 @@ const addRoom = async (req, res) => {
       await Computer.create({
         RoomID: room.RoomID,
         ComputerName: `${newRoom.RoomName}-${i.toString().padStart(2, "0")}`,
+        LastTime: formattedDateTime,
         RAM: newRoom.StandardRAM,
         HDD: newRoom.StandardHDD,
         CPU: newRoom.StandardCPU,
@@ -71,10 +73,7 @@ const deleteRoom = async (req, res) => {
     // Xóa phòng
     await Room.destroy({ where: { RoomID: roomID } });
 
-    return res.status(200).json({
-      status: "success",
-      message: "Room deleted successfully",
-    });
+    return sendSuccessResponse(res, "Room deleted successfully");
   } catch (error) {
     console.error("Error deleting room:", error);
     return res.status(500).json({
