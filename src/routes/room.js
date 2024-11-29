@@ -8,6 +8,8 @@ router.post("/", room.addRoom);
 router.get("/id/:id", room.getRoomByID);
 router.delete("/:id", room.deleteRoom);
 router.put("/:id", room.updateRoom);
+router.get("/:id", room.getRoomByName);
+
 router.get("/", room.getAllRoom);
 
 module.exports = router;

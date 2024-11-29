@@ -16,6 +16,16 @@ let getRoomByID = async (req, res, next) => {
     data: Rooms,
   });
 };
+let getRoomByName = async (req, res, next) => {
+  let id = req.params.id;
+  let Rooms = await Room.findAll({
+    where: {
+        RoomName: id,
+        Status: {
+            [Op.ne]: "Xóa" // Khác "Xóa"
+        }
+    }
+});}
 let getAllRoom = async (req, res, next) => {
   let Rooms = await Room.findAll();
   return res.send({
@@ -111,4 +121,5 @@ module.exports = {
   updateRoom,
   getRoomByID,
   getAllRoom,
+  getRoomByName
 };
