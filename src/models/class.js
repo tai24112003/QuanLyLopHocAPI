@@ -24,8 +24,9 @@ const Class = sequelize.define(
     LastTime: { type: DataTypes.STRING, allowNull: false },
   },
   {
-    timestamps: false,
+    timestamps: true,
     tableName: "Classes",
+    paranoid: true,
   }
 );
 

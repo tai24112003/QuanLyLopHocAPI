@@ -2,10 +2,29 @@ const express = require("express");
 
 const Class = require("../controllers/ClassController");
 const authenticateToken = require("../midlewares/verifyToken");
+const ROLES = require("../ultis/role");
+const checkPermission = require("../midlewares/authorization");
 
 let router = express.Router();
 router.get("/getClassBetween", Class.getClassByDateRange);
-router.get("/userID", authenticateToken, Class.getClassesByUserId);
+router.get(
+  "/userID",
+  authenticateToken,
+  checkPermission([ROLES.ADMIN, ROLES.TK, ROLES.PK, ROLES.GV]),
+  Class.getClassesByUserId
+);
 router.post("/", Class.insert);
 router.get("/", Class.getAllClasses);
+router.put(
+  "/:ClassID",
+  authenticateToken,
+  checkPermission([ROLES.ADMIN, ROLES.TK, ROLES.PK, ROLES.GV]),
+  Class.updateClassStatus
+);
+router.delete(
+  "/:ClassID",
+  checkPermission([ROLES.ADMIN, ROLES.TK, ROLES.PK, ROLES.GV]),
+  authenticateToken,
+  Class.deleteClass
+);
 module.exports = router;
