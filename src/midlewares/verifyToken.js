@@ -4,7 +4,6 @@ require("dotenv").config(); // Load biến môi trường từ file .env
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-
   if (!token) {
     return res
       .status(401)
