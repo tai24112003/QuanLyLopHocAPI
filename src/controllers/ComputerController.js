@@ -5,6 +5,7 @@ const Setting = require("../models/setting"); // Import model Setting
 const Session_Computer = require("../models/session_computer");
 const { sendSuccessResponse } = require("../ultis/response");
 const { Op } = require("sequelize"); // Đảm bảo đã import Op từ sequelize
+const { formattedDateTime } = require("../ultis/formatData");
 // Lấy danh sách máy theo RoomID
 const getComputerByRoomID = async (req, res, next) => {
   const { RoomID } = req.params;
@@ -79,7 +80,7 @@ const addComputer = async (req, res) => {
       RAM,
       HDD,
       CPU,
-      LastTime,
+      LastTime: formattedDateTime,
     });
 
     // Tăng số lượng máy trong phòng

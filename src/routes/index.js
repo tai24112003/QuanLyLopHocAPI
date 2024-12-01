@@ -1,6 +1,5 @@
 const express = require("express");
 
-const adminRouter = require("./admin");
 const Class = require("./class");
 const class_student = require("./class_student");
 const student = require("./student");

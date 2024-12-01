@@ -37,7 +37,7 @@ const login = async (req, res) => {
       { expiresIn: "48h" }
     );
 
-    return sendSuccessResponse(res, { token });
+    return sendSuccessResponse(res, { token, role: user.role });
   } catch (error) {
     console.error("Error:", error);
     return sendInternalErrorResponse(res);
