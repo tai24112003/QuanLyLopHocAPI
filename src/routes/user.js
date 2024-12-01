@@ -33,11 +33,6 @@ router.put(
   checkPermission([ROLES.ADMIN, ROLES.TK, ROLES.PK]),
   UserController.toggleUserStatus
 );
-router.put(
-  "/:id",
-  authenticateToken,
-  checkPermission([ROLES.ADMIN, ROLES.TK, ROLES.PK]),
-  UserController.updateUser
-);
+router.put("/:id", authenticateToken, UserController.updateUser);
 
 module.exports = router;

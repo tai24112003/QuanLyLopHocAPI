@@ -137,9 +137,90 @@ const getClassByDateRange = async (req, res, next) => {
   }
 };
 
+const deleteClass = async (req, res) => {
+  try {
+    const { ClassID } = req.params;
+    const userId = req.user.id;
+    // Tìm class theo classID
+    const targetClass = await Classes.findOne({
+      where: {
+        classID: ClassID, // Giả sử id là khóa chính của lớp học
+      },
+    });
+
+    // Kiểm tra class có tồn tại không
+    if (!targetClass) {
+      return sendErrorResponse(res, "Class not found", 404);
+    }
+
+    // Kiểm tra quyền: chỉ cho phép cập nhật nếu UserID của class trùng với ID người đăng nhập
+    if (targetClass.UserID !== userId) {
+      return sendErrorResponse(
+        res,
+        "You don't have permission to update this class",
+        403
+      );
+    }
+
+    if (targetClass.Status) {
+      return sendErrorResponse(
+        res,
+        "Cannot delete class with active status",
+        400
+      );
+    }
+
+    await targetClass.destroy();
+
+    return sendSuccessResponse(res, targetClass);
+  } catch (error) {
+    console.error("Error updating class status:", error);
+    return sendErrorResponse(res, "Failed to update class status", 500);
+  }
+};
+
+const updateClassStatus = async (req, res) => {
+  try {
+    const { ClassID } = req.params;
+    const { status } = req.body;
+    const userId = req.user.id;
+    // Tìm class theo classID
+    const targetClass = await Classes.findOne({
+      where: {
+        classID: ClassID, // Giả sử id là khóa chính của lớp học
+      },
+    });
+
+    // Kiểm tra class có tồn tại không
+    if (!targetClass) {
+      return sendErrorResponse(res, "Class not found", 404);
+    }
+
+    // Kiểm tra quyền: chỉ cho phép cập nhật nếu UserID của class trùng với ID người đăng nhập
+    if (targetClass.UserID !== userId) {
+      return sendErrorResponse(
+        res,
+        "You don't have permission to update this class",
+        403
+      );
+    }
+
+    // Cập nhật status của class
+    targetClass.Status = status; // Gán status mới
+    await targetClass.save(); // Lưu thay đổi
+
+    return sendSuccessResponse(res, targetClass);
+  } catch (error) {
+    console.error("Error updating class status:", error);
+    return sendErrorResponse(res, "Failed to update class status", 500);
+  }
+};
+
 module.exports = {
   insert,
   getAllClasses,
   getClassesByUserId,
   getClassByDateRange,
+  updateClassStatus,
+  deleteClass,
 };

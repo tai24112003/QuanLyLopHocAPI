@@ -126,7 +126,7 @@ let updateUser = async (req, res, next) => {
     const { email, name, phone, role, password } = req.body;
 
     if (
-      loggedInUserId !== targetUserId &&
+      loggedInUserId != targetUserId &&
       !["TK", "PK", "admin"].includes(req.user.role)
     ) {
       return res.status(403).send({
