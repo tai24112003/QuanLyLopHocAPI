@@ -6,7 +6,7 @@ const Student = require("../models/student");
 let insert = async (req, res) => {
   try {
     const attendances = req.body;
-    console.log(attendances[0]["SessionID"]);
+    console.log(attendances[0]);
 
     await Attendance.destroy({
       where: { SessionID: attendances[0]["SessionID"] },

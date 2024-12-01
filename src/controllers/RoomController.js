@@ -22,16 +22,14 @@ let getRoomByName = async (req, res, next) => {
   let Rooms = await Room.findAll({
     where: {
       RoomName: id,
-      Status: {
-        [Op.ne]: "Xóa", // Khác "Xóa"
-      },
-    },
+
+    }
   });
   return res.send({
     status: "success",
     data: Rooms,
   });
-};
+}
 let getAllRoom = async (req, res, next) => {
   let Rooms = await Room.findAll();
   return res.send({

@@ -100,29 +100,23 @@ let getClassesByUserId = async (req, res) => {
   }
 };
 const getClassByDateRange = async (req, res, next) => {
-  const { startTime, endTime } = req.query;
+  const { startDate, endDate } = req.query; // Chú ý đổi tên query từ startTime và endTime sang startDate và endDate.
 
   try {
     const lstClass = await Classes.findAll({
-      where: {
-        LastTime: {
-          [Op.and]: [
-            Sequelize.where(
-              Sequelize.fn(
-                "STR_TO_DATE",
-                Sequelize.col("LastTime"),
-                "%d/%m/%Y %H:%i:%s"
-              ),
-              {
-                [Op.gte]: new Date(startTime),
-                [Op.lte]: new Date(endTime),
-              }
-            ),
-          ],
-        },
-      },
+      where: Sequelize.where(
+        Sequelize.fn(
+          "STR_TO_DATE",
+          Sequelize.col("LastTime"),
+          "%d/%m/%Y %H:%i:%s"
+        ),
+        {
+          [Op.gte]: new Date(startDate),
+          [Op.lte]: new Date(endDate),
+        }
+      ),
     });
-
+  
     return res.status(200).json({
       status: "success",
       data: lstClass,
@@ -135,6 +129,7 @@ const getClassByDateRange = async (req, res, next) => {
       error: error.message,
     });
   }
+  
 };
 
 const deleteClass = async (req, res) => {
