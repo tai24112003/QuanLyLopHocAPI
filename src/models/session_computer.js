@@ -51,7 +51,7 @@ const Session_Computer = sequelize.define(
       type: DataTypes.BOOLEAN,
     },
     MismatchInfo: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     maintenanceTime:{
       type: DataTypes.STRING
