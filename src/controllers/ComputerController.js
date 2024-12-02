@@ -91,7 +91,7 @@ const addComputer = async (req, res) => {
 
     // Cập nhật lastTimeUpdateComputer trong bảng setting
     await Setting.update(
-      { lastTimeUpdateComputer: new Date().toISOString() },
+      { lastTimeUpdateComputer: formattedDateTime },
       { where: { ID: 1 } } // Điều chỉnh ID nếu cần
     );
 
@@ -134,7 +134,7 @@ const deleteComputer = async (req, res) => {
 
     // Cập nhật lastTimeUpdateComputer trong bảng setting
     await Setting.update(
-      { lastTimeUpdateComputer: new Date().toISOString() },
+      { lastTimeUpdateComputer: formattedDateTime },
       { where: { ID: 1 } } // Điều chỉnh ID nếu cần
     );
 
@@ -173,7 +173,7 @@ const updateComputer = async (req, res) => {
 
     // Cập nhật lastTimeUpdateComputer trong bảng setting
     await Setting.update(
-      { lastTimeUpdateComputer: new Date().toISOString() },
+      { lastTimeUpdateComputer: formattedDateTime },
       { where: { ID: 1 } } // Điều chỉnh ID nếu cần
     );
     sendSuccessResponse(res, "Computer updated successfully");
