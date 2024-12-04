@@ -1,7 +1,7 @@
 const Room = require("../models/room");
 const Computer = require("../models/computer");
 const ClassSession = require("../models/class_sessions");
-const { sendSuccessResponse } = require("../ultis/response");
+const { sendSuccessResponse, sendErrorResponse } = require("../ultis/response");
 const { formattedDateTime } = require("../ultis/formatData");
 const { Op } = require("sequelize"); // Đảm bảo đã import Op từ sequelize
 
@@ -22,14 +22,13 @@ let getRoomByName = async (req, res, next) => {
   let Rooms = await Room.findAll({
     where: {
       RoomName: id,
-
-    }
+    },
   });
   return res.send({
     status: "success",
     data: Rooms,
   });
-}
+};
 let getAllRoom = async (req, res, next) => {
   let Rooms = await Room.findAll();
   return res.send({
@@ -40,6 +39,18 @@ let getAllRoom = async (req, res, next) => {
 const addRoom = async (req, res) => {
   try {
     const newRoom = req.body;
+
+    // Kiểm tra RoomName trùng
+    const existingRoom = await Room.findOne({
+      where: { RoomName: newRoom.RoomName },
+    });
+    if (existingRoom) {
+      return sendErrorResponse(
+        res,
+        "Tên phòng đã tồn tại. Vui lòng chọn tên khác.",
+        400
+      );
+    }
     // Thêm phòng mới
     var room = await Room.create(newRoom);
 
@@ -102,12 +113,45 @@ const updateRoom = async (req, res) => {
   try {
     const roomID = req.params.id;
     const updatedRoom = req.body;
+
+    // Lấy thông tin phòng cũ trước khi cập nhật
+    const oldRoom = await Room.findOne({ where: { RoomID: roomID } });
+    if (!oldRoom) {
+      return res.status(404).json({
+        status: "error",
+        message: "Room not found",
+      });
+    }
+
     // Cập nhật thông tin phòng
     await Room.update(updatedRoom, { where: { RoomID: roomID } });
 
+    // Tìm các máy thuộc phòng này
+    const computers = await Computer.findAll({ where: { RoomID: roomID } });
+
+    // Cập nhật RAM, HDD, CPU của các máy nếu trùng với giá trị cũ của phòng
+    for (const computer of computers) {
+      const updates = {};
+      if (computer.RAM === oldRoom.StandardRAM) {
+        updates.RAM = updatedRoom.StandardRAM;
+      }
+      if (computer.HDD === oldRoom.StandardHDD) {
+        updates.HDD = updatedRoom.StandardHDD;
+      }
+      if (computer.CPU === oldRoom.StandardCPU) {
+        updates.CPU = updatedRoom.StandardCPU;
+      }
+
+      if (Object.keys(updates).length > 0) {
+        await Computer.update(updates, {
+          where: { ID: computer.ID },
+        });
+      }
+    }
+
     return res.status(200).json({
       status: "success",
-      message: "Room updated successfully",
+      message: "Room and computers updated successfully",
     });
   } catch (error) {
     console.error("Error updating room:", error);
