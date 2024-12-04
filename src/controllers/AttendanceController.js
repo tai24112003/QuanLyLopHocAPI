@@ -18,6 +18,12 @@ let insert = async (req, res) => {
         SessionID: element["SessionID"],
         Present: element["Present"],
         Remarks: element["Remarks"],
+      }).catch((err) => {
+        console.error("Error creating attendance record:", err.message);
+        return res.status(500).json({
+          status: "error",
+          message: "Failed to insert attendance",
+        });
       });
     });
 
