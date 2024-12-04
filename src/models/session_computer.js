@@ -53,10 +53,13 @@ const Session_Computer = sequelize.define(
     MismatchInfo: {
       type: DataTypes.TEXT,
     },
-    maintenanceTime:{
-      type: DataTypes.STRING
-    }
-   
+    maintenanceTime: {
+      type: DataTypes.STRING,
+    },
+    CurrentConfig: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     tableName: "Session_Computer",
