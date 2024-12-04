@@ -122,15 +122,21 @@ let addUser = async (req, res, next) => {
 let deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params; // Nhận id người dùng từ tham số URL
+    const loggedInUserId = req.user.id; // Lấy id của người dùng đang đăng nhập
 
     if (!id) {
-      return sendErrorResponse(res, "Missing user ID", 400);
+      return sendErrorResponse(res, "Thiếu id cần xóa", 400);
+    }
+
+    // Kiểm tra xem người dùng có thể xóa chính mình hay không
+    if (id === loggedInUserId) {
+      return sendErrorResponse(res, "Bạn không thể xóa chính bạn", 403);
     }
 
     const user = await User.findOne({ where: { id } });
 
     if (!user) {
-      return sendErrorResponse(res, "User not found", 404);
+      return sendErrorResponse(res, "Không tìm thấy người dùng", 404);
     }
 
     // Tiến hành xóa người dùng
@@ -138,8 +144,9 @@ let deleteUser = async (req, res, next) => {
       where: { id },
     });
 
-    return sendSuccessResponse(res, { message: "User deleted successfully" });
+    return sendSuccessResponse(res, { message: "Đã xóa user thành công" });
   } catch (e) {
+    console.error(e);
     return sendInternalErrorResponse(res);
   }
 };
