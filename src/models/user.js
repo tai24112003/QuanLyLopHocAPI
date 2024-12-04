@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 const { sequelize } = require("../configs/database");
+const Class = require("./class");
 
 const User = sequelize.define(
   "User",
@@ -23,5 +24,6 @@ const User = sequelize.define(
     timestamps: false,
   }
 );
+
 
 module.exports = User;

@@ -23,8 +23,8 @@ router.put(
 );
 router.delete(
   "/:ClassID",
-  checkPermission([ROLES.ADMIN, ROLES.TK, ROLES.PK, ROLES.GV]),
   authenticateToken,
+  checkPermission([ROLES.ADMIN, ROLES.TK, ROLES.PK, ROLES.GV]),
   Class.deleteClass
 );
 module.exports = router;

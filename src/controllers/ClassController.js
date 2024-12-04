@@ -2,6 +2,7 @@ const Classes = require("../models/class");
 const { Op, Sequelize } = require("sequelize");
 const { sendSuccessResponse, sendErrorResponse } = require("../ultis/response");
 const Setting = require("../models/setting"); // Điều chỉnh đường dẫn nếu cần
+const User = require("../models/user"); // Điều chỉnh đường dẫn nếu cần
 
 let insert = async (req, res) => {
   try {
@@ -53,7 +54,11 @@ let insert = async (req, res) => {
 // Function to get all classes
 let getAllClasses = async (req, res) => {
   try {
-    const allClasses = await Classes.findAll();
+    const allClasses = await Classes.findAll({
+      where: {
+        status: true, // Lọc các lớp có status là true
+      },
+    });
 
     // Return success response with all classes
     return res.status(200).json({
@@ -82,6 +87,12 @@ let getClassesByUserId = async (req, res) => {
         where: {
           UserID: userId, // Assuming 'UserID' is the correct field in your Classes model
         },
+        include: [
+          {
+            model: User,
+            attributes: ["Name", "Email"], // Bao gồm dữ liệu từ model User
+          },
+        ],
       });
     } else if (req.user.role === "MT") {
       return sendErrorResponse(
@@ -90,7 +101,14 @@ let getClassesByUserId = async (req, res) => {
         403
       );
     } else {
-      userClasses = await Classes.findAll();
+      userClasses = await Classes.findAll({
+        include: [
+          {
+            model: User, // Bảng User
+            attributes: ["Name", "Email"], // Chỉ lấy các cột cần thiết
+          },
+        ],
+      });
     }
     return sendSuccessResponse(res, userClasses);
   } catch (error) {
@@ -116,7 +134,7 @@ const getClassByDateRange = async (req, res, next) => {
         }
       ),
     });
-  
+
     return res.status(200).json({
       status: "success",
       data: lstClass,
@@ -129,7 +147,6 @@ const getClassByDateRange = async (req, res, next) => {
       error: error.message,
     });
   }
-  
 };
 
 const deleteClass = async (req, res) => {

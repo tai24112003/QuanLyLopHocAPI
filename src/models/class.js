@@ -30,4 +30,7 @@ const Class = sequelize.define(
   }
 );
 
+User.hasMany(Class, { foreignKey: "UserID" });
+Class.belongsTo(User, { foreignKey: "UserID" });
+
 module.exports = Class;
