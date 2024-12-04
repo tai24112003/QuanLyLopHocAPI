@@ -1,5 +1,6 @@
 const SessionComputer = require("../models/session_computer");
 const Computers = require("../models/computer");
+const Student = require("../models/student");
 const { Op } = require("sequelize");
 const { sendSuccessResponse, sendErrorResponse } = require("../ultis/response");
 
@@ -8,14 +9,31 @@ const insert = async (req, res) => {
   try {
     const sessionComputers = req.body; // Assuming req.body is an array of session computer objects
     const sessionID = sessionComputers[0]["SessionID"];
+    const missingStudents = new Set(); // Use a Set to avoid duplicate StudentID entries
 
     // Delete existing session computers for the session
     await SessionComputer.destroy({
       where: { sessionID },
     });
 
-    // Insert new session computers
     for (const element of sessionComputers) {
+      const { StudentID } = element;
+
+      // Check if StudentID already exists in the missingStudents Set
+      if (missingStudents.has(StudentID)) {
+        continue; // Skip if already in the missing list
+      }
+
+      // Check if StudentID exists in the database
+      const studentExists = await Student.findOne({ where: { StudentID } });
+
+      if (!studentExists) {
+        // Add StudentID to the missing list
+        missingStudents.add(StudentID);
+        continue;
+      }
+
+      // Insert new session computer
       await SessionComputer.create({
         SessionID: element["SessionID"],
         ComputerID: element["ComputerID"],
@@ -33,6 +51,7 @@ const insert = async (req, res) => {
     return res.status(201).json({
       status: "success",
       message: "Session computers inserted successfully",
+      data: Array.from(missingStudents), // Convert Set to Array before returning
     });
   } catch (error) {
     console.error("Error inserting session computers:", error);
@@ -43,6 +62,7 @@ const insert = async (req, res) => {
     });
   }
 };
+
 
 // Delete session computers by session ID
 const deleteByID = async (req, res) => {

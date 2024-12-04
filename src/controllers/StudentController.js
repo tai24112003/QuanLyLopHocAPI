@@ -3,62 +3,69 @@ const { Op, Sequelize } = require("sequelize");
 // Endpoint to insert students
 const Setting = require("../models/setting"); // Điều chỉnh đường dẫn nếu cần
 
+// Endpoint to insert or update students
 const insert = async (req, res) => {
   try {
-    const students = req.body;
-    let latestTime = null; // Biến để lưu trữ LastTime mới nhất
+    const students = req.body; 
+    if (!Array.isArray(students) || students.length === 0) {
+      return res.status(400).json({
+        status: "error",
+        message: "Invalid input, expected a non-empty array of students.",
+      });
+    }
 
-    // Duyệt qua từng sinh viên và chèn hoặc cập nhật thông tin vào cơ sở dữ liệu
-    for (const student of students) {
-      const existingStudent = await Student.findOne({
+    let latestTime = null; // To track the most recent LastTime
+
+    // Process students
+    const studentPromises = students.map(async (student) => {
+      const [existingStudent, isNew] = await Student.findOrCreate({
         where: { StudentID: student.StudentID },
+        defaults: {
+          FirstName: student.FirstName,
+          LastName: student.LastName,
+          LastTime: student.LastTime,
+        },
       });
 
-      if (existingStudent) {
-        // Nếu StudentID đã tồn tại, cập nhật thông tin học sinh
+      if (!isNew) {
+        // Update if student already exists
         await existingStudent.update({
           FirstName: student.FirstName,
           LastName: student.LastName,
           LastTime: student.LastTime,
         });
-      } else {
-        // Nếu StudentID chưa tồn tại, thêm mới vào bảng Student
-        await Student.create({
-          StudentID: student.StudentID,
-          FirstName: student.FirstName,
-          LastName: student.LastName,
-          LastTime: student.LastTime,
-        });
       }
 
-      // Cập nhật latestTime nếu LastTime của sinh viên hiện tại mới hơn
+      // Update latestTime if LastTime is newer
       if (!latestTime || new Date(student.LastTime) > new Date(latestTime)) {
         latestTime = student.LastTime;
       }
-    }
+    });
 
-    // Nếu latestTime được cập nhật, cập nhật lastTimeUpdateStudent trong bảng setting
+    await Promise.all(studentPromises);
+
     if (latestTime) {
       await Setting.update(
         { lastTimeUpdateStudent: latestTime },
-        { where: { ID: 1 } } // Điều chỉnh ID phù hợp nếu cần
+        { where: { ID: 1 } } // Adjust the ID to match your setup
       );
     }
 
-    // Trả về phản hồi thành công với danh sách sinh viên
+    // Return success response
     return res.status(201).json({
       status: "success",
-      data: students,
+      message: "Students inserted/updated successfully.",
     });
   } catch (error) {
     console.error("Error inserting students:", error);
     return res.status(500).json({
       status: "error",
-      message: "Failed to insert students",
+      message: "Failed to insert students.",
       error: error.message,
     });
   }
 };
+
 
 const getStudentsByTimeRange = async (req, res) => {
   try {
@@ -93,7 +100,63 @@ const getStudentsByTimeRange = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  try {
+    const students = req.body; // Array of students to update
+    let latestTime = null; // Variable to store the latest LastTime
+
+    for (const student of students) {
+      const existingStudent = await Student.findOne({
+        where: { StudentID: student.StudentID },
+      });
+
+      if (existingStudent) {
+        // Update the student's information
+        await existingStudent.update({
+          FirstName: student.FirstName || existingStudent.FirstName,
+          LastName: student.LastName || existingStudent.LastName,
+          LastTime: student.LastTime || existingStudent.LastTime,
+        });
+
+        // Update latestTime if the new LastTime is more recent
+        if (!latestTime || new Date(student.LastTime) > new Date(latestTime)) {
+          latestTime = student.LastTime;
+        }
+      } else {
+        // If the student does not exist, respond with an error
+        return res.status(404).json({
+          status: "error",
+          message: `Student with ID ${student.StudentID} not found`,
+        });
+      }
+    }
+
+    // Update lastTimeUpdateStudent in the Setting table if latestTime was updated
+    if (latestTime) {
+      await Setting.update(
+        { lastTimeUpdateStudent: latestTime },
+        { where: { ID: 1 } } // Adjust the ID as needed
+      );
+    }
+
+    // Return success response
+    return res.status(200).json({
+      status: "success",
+      message: "Students updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating students:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Failed to update students",
+      error: error.message,
+    });
+  }
+};
+
+
 module.exports = {
   insert,
   getStudentsByTimeRange,
+  update
 };
