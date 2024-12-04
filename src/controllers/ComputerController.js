@@ -3,9 +3,11 @@ const Computer = require("../models/computer");
 const ClassSession = require("../models/class_sessions");
 const Setting = require("../models/setting"); // Import model Setting
 const Session_Computer = require("../models/session_computer");
-const { sendSuccessResponse } = require("../ultis/response");
+const { sendSuccessResponse, sendErrorResponse } = require("../ultis/response");
 const { Op } = require("sequelize"); // Đảm bảo đã import Op từ sequelize
 const { formattedDateTime } = require("../ultis/formatData");
+const SessionComputer = require("../models/session_computer");
+
 // Lấy danh sách máy theo RoomID
 const getComputerByRoomID = async (req, res, next) => {
   const { RoomID } = req.params;
@@ -159,9 +161,24 @@ const updateComputer = async (req, res) => {
   try {
     // Cập nhật thông tin máy tính
     if (ComputerID) {
-      await Computer.update(updatedComputer, {
-        where: { ID: ComputerID },
-      });
+      if (updatedComputer.HDD && updatedComputer.RAM && updatedComputer.CPU) {
+        await Computer.update(updatedComputer, {
+          where: { ID: ComputerID },
+        });
+
+        await SessionComputer.update(
+          { CurrentConfig: false },
+          { where: { ComputerID: ComputerID } }
+        );
+
+        // Đặt CurrentConfig của bản ghi có SessionID thành true
+        if (ID) {
+          await SessionComputer.update(
+            { CurrentConfig: true },
+            { where: { ID: ID } }
+          );
+        }
+      } else return sendErrorResponse(res, "Thông tin không hợp lệ", 500);
     } else {
       await Computer.update(
         { ComputerName: ComputerName, ...updatedComputer },
