@@ -119,6 +119,31 @@ let addUser = async (req, res, next) => {
   }
 };
 
+let deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params; // Nhận id người dùng từ tham số URL
+
+    if (!id) {
+      return sendErrorResponse(res, "Missing user ID", 400);
+    }
+
+    const user = await User.findOne({ where: { id } });
+
+    if (!user) {
+      return sendErrorResponse(res, "User not found", 404);
+    }
+
+    // Tiến hành xóa người dùng
+    await User.destroy({
+      where: { id },
+    });
+
+    return sendSuccessResponse(res, { message: "User deleted successfully" });
+  } catch (e) {
+    return sendInternalErrorResponse(res);
+  }
+};
+
 let updateUser = async (req, res, next) => {
   try {
     const loggedInUserId = req.user.id;
@@ -216,4 +241,5 @@ module.exports = {
   addUser,
   updateUser,
   toggleUserStatus,
+  deleteUser,
 };
