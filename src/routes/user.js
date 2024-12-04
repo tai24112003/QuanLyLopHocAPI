@@ -34,5 +34,11 @@ router.put(
   UserController.toggleUserStatus
 );
 router.put("/:id", authenticateToken, UserController.updateUser);
+router.delete(
+  "/:id",
+  authenticateToken,
+  checkPermission([ROLES.ADMIN, ROLES.TK, ROLES.PK]),
+  UserController.deleteUser
+);
 
 module.exports = router;
